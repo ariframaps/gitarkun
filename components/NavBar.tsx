@@ -1,10 +1,6 @@
+import { NavLinkType } from "@/lib/types";
 import Link from "next/link";
 import React from "react";
-
-type NavLinkType = {
-  name: string;
-  href: string;
-};
 
 const navLinks: NavLinkType[] = [
   { name: "Home", href: "/" },
@@ -24,8 +20,12 @@ const NavBar = () => {
           ))}
         </div>
         <div className="flex gap-5">
-          <button type="button">Cart</button>
-          <button type="button">Start Selling</button>
+          <button>
+            <Link href={"/cart"}>Cart</Link>
+          </button>
+          <button>
+            <Link href={"/dashboard"}>Start Selling</Link>
+          </button>
         </div>
       </div>
     </div>
