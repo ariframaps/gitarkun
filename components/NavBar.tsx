@@ -4,7 +4,7 @@ import React from "react";
 
 const navLinks: NavLinkType[] = [
   { name: "Home", href: "/" },
-  { name: "Explore", href: "/explore" },
+  { name: "Explore", href: "/products" },
 ];
 
 const NavBar = () => {

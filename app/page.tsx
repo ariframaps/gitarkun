@@ -30,7 +30,7 @@ const page = () => {
   ];
 
   return (
-    <div>
+    <>
       <section className="flex">
         <div className="flex-1 flex flex-col justify-center items-center">
           <div>
@@ -38,7 +38,7 @@ const page = () => {
             <p>Caption</p>
             <div className="flex gap-5">
               <button>
-                <Link href={"/explore"}>Explore</Link>
+                <Link href={"/products"}>Explore</Link>
               </button>
               <button>
                 <Link href={"/dashboard"}>Sell</Link>
@@ -59,7 +59,7 @@ const page = () => {
         <div className="flex w-full justify-between">
           <span>Featured</span>
           <button>
-            <Link href={"/explore"}>View All</Link>
+            <Link href={"/products"}>View All</Link>
           </button>
         </div>
         <ul className="grid grid-cols-3 gap-5">
@@ -69,7 +69,7 @@ const page = () => {
             ))}
         </ul>
       </section>
-    </div>
+    </>
   );
 };
 
