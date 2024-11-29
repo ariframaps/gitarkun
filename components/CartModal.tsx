@@ -46,7 +46,9 @@ const CartModal = () => {
           <p>Your all cart items are here!</p>
           <ul>
             {cartItems &&
-              cartItems.map((item) => <CartCard key={item.id} item={item} />)}
+              cartItems.map((item) => (
+                <CartCard key={item.id} item={item} useInCart={true} />
+              ))}
           </ul>
         </div>
         <div>
@@ -54,7 +56,7 @@ const CartModal = () => {
             <span>Total:</span>
             <span>Rp 50.000</span>
           </div>
-          <button>
+          <button onClick={handleClose}>
             <Link href={"/checkout"}>Checkout</Link>
           </button>
         </div>
