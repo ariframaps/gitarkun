@@ -5,21 +5,21 @@ import React from "react";
 const page = () => {
   const products: ProductCardType[] = [
     {
-      id: 2,
+      id: "2",
       name: "tes title1",
       image: "/fd/fdas.png",
       price: 99000,
       sellerId: "joko",
     },
     {
-      id: 1,
+      id: "1",
       name: "tes title1",
       image: "/fd/fdas.png",
       price: 99000,
       sellerId: "joko",
     },
     {
-      id: 3,
+      id: "3",
       name: "tes title1",
       image: "/fd/fdas.png",
       price: 99000,
@@ -30,7 +30,7 @@ const page = () => {
   return (
     <>
       <section className="max-w-5xl mx-auto">
-        <h1>Featured</h1>
+        <h1>Explore</h1>
         <div>
           <form>
             <span>Search : </span>
