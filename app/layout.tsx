@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import NavBar from "@/components/NavBar";
 
 export const metadata: Metadata = {
-  title: "Gitar-kun",
+  title: "Gitar-Kun",
   description: "Guitar Tabs E-commerce",
 };
 
@@ -14,7 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <NavBar />
+        <main>{children}</main>
+      </body>
     </html>
   );
 }
