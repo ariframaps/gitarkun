@@ -1,3 +1,6 @@
+"use client";
+
+import { useShowCart } from "@/context/showCart/ShowCartProvider";
 import { NavLinkType } from "@/lib/types";
 import Link from "next/link";
 import React from "react";
@@ -8,6 +11,12 @@ const navLinks: NavLinkType[] = [
 ];
 
 const NavBar = () => {
+  const { setShowCart } = useShowCart();
+
+  function handleShowCart() {
+    setShowCart(true);
+  }
+
   return (
     <div className="w-screen p-3 border-b-2">
       <div className="flex justify-between">
@@ -20,9 +29,7 @@ const NavBar = () => {
           ))}
         </div>
         <div className="flex gap-5">
-          <button>
-            <Link href={"/cart"}>Cart</Link>
-          </button>
+          <button onClick={handleShowCart}>Cart</button>
           <button>
             <Link href={"/dashboard"}>Start Selling</Link>
           </button>

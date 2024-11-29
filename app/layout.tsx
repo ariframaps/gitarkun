@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
+import CartModal from "@/components/CartModal";
+import { CartProvider } from "@/context/showCart/ShowCartProvider";
 
 export const metadata: Metadata = {
   title: "Gitar-Kun",
@@ -15,10 +17,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <NavBar />
-        <main>{children}</main>
-      </body>
+      <CartProvider>
+        <body>
+          <NavBar />
+          <main>{children}</main>
+          <CartModal />
+        </body>
+      </CartProvider>
     </html>
   );
 }
