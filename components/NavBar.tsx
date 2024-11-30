@@ -2,7 +2,9 @@
 
 import { useShowCart } from "@/context/showCart/ShowCartProvider";
 import { NavLinkType } from "@/lib/types";
+import { SignedIn, UserButton, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const navLinks: NavLinkType[] = [
@@ -12,8 +14,15 @@ const navLinks: NavLinkType[] = [
 
 const NavBar = () => {
   const { setShowCart } = useShowCart();
+  const router = useRouter();
+
+  const { isSignedIn, sessionId, userId } = useAuth();
 
   function handleShowCart() {
+    if (!isSignedIn) {
+      router.push("/sign-in");
+      return;
+    }
     setShowCart(true);
   }
 
@@ -33,6 +42,9 @@ const NavBar = () => {
           <button>
             <Link href={"/dashboard"}>Start Selling</Link>
           </button>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </div>
       </div>
     </div>

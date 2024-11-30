@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import CartModal from "@/components/CartModal";
 import { CartProvider } from "@/context/showCart/ShowCartProvider";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Gitar-Kun",
@@ -16,14 +16,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <CartProvider>
-        <body>
-          <NavBar />
-          <main>{children}</main>
-          <CartModal />
-        </body>
-      </CartProvider>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <CartProvider>
+          <body>
+            <NavBar />
+            <main>{children}</main>
+            <CartModal />
+          </body>
+        </CartProvider>
+      </html>
+    </ClerkProvider>
   );
 }
