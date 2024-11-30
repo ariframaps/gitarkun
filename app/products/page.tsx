@@ -1,31 +1,32 @@
+"use client";
+
 import ProductCard from "@/components/ProductCard";
-import { ProductCardType } from "@/lib/types";
-import React from "react";
+import { fetchAllProducts } from "@/lib/api";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
+import React, { useEffect } from "react";
 
 const page = () => {
-  const products: ProductCardType[] = [
-    {
-      id: "2",
-      name: "tes title1",
-      image: "/fd/fdas.png",
-      price: 99000,
-      sellerId: "joko",
-    },
-    {
-      id: "1",
-      name: "tes title1",
-      image: "/fd/fdas.png",
-      price: 99000,
-      sellerId: "joko",
-    },
-    {
-      id: "3",
-      name: "tes title1",
-      image: "/fd/fdas.png",
-      price: 99000,
-      sellerId: "joko",
-    },
-  ];
+  const { data, error, isLoading, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["all-product"],
+      queryFn: fetchAllProducts,
+      initialPageParam: 0,
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+    });
+
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, inView]);
+
+  if (error) return <p>Something went wrong</p>;
+  if (isLoading) return <p>Loading...</p>;
+
+  console.log(data);
 
   return (
     <>
@@ -37,14 +38,22 @@ const page = () => {
             <input type="text" name="searchInput" id="searchInput" />
             <button type="submit">Search</button>
           </form>
-          {/* ini isi dropdown */}
+          {/* ini isi dropdown buat filter dan sort*/}
         </div>
-        <ul className="grid grid-cols-3 gap-5">
-          {products &&
-            products.map((product) => (
-              <ProductCard product={product} key={product.id} />
+        <div className="bg-yellow-200 flex flex-col gap-5">
+          {data &&
+            data.pages.map((page) => (
+              <ul
+                key={page.currentPage}
+                className="bg-green-200 grid grid-cols-3 gap-5">
+                {page.data.data?.map((product) => (
+                  <ProductCard product={product} key={product._id} />
+                ))}
+              </ul>
             ))}
-        </ul>
+
+          <div ref={ref}>{isFetchingNextPage && "Loading More Tabs...."}</div>
+        </div>
       </section>
     </>
   );

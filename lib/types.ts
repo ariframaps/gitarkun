@@ -1,9 +1,12 @@
 export type ProductCardType = {
-  id: string;
+  _id: string;
   name: string;
   image: string;
   price: number;
   sellerId: string;
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  category: string;
+  isDeleted: boolean;
 };
 
 export type ProductType = {
@@ -19,6 +22,7 @@ export type ProductType = {
   isDeleted: false;
   isCreatedAt: string;
   isUpdatedAt: string;
+  __v: string;
 };
 
 export type ProductSoldCardType = ProductCardType & {

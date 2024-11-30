@@ -1,6 +1,6 @@
 "use client";
 
-import { useShowCart } from "@/context/showCart/ShowCartProvider";
+import { useShowCart } from "@/provider/context/ShowCartProvider";
 import { NavLinkType } from "@/lib/types";
 import { SignedIn, UserButton, useAuth } from "@clerk/nextjs";
 import Link from "next/link";

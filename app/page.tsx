@@ -1,34 +1,22 @@
+"use client";
+
 import ProductCard from "@/components/ProductCard";
-import { ProductCardType } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchLatestProducts } from "@/lib/api";
 
 const page = () => {
-  const products: ProductCardType[] = [
-    {
-      id: "2",
-      name: "tes title1",
-      image: "/fd/fdas.png",
-      price: 99000,
-      sellerId: "joko",
-    },
-    {
-      id: "1",
-      name: "tes title1",
-      image: "/fd/fdas.png",
-      price: 99000,
-      sellerId: "joko",
-    },
-    {
-      id: "3",
-      name: "tes title1",
-      image: "/fd/fdas.png",
-      price: 99000,
-      sellerId: "joko",
-    },
-  ];
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["all-product"],
+    queryFn: fetchLatestProducts,
+  });
 
+  if (error) return <p>Something went wrong</p>;
+  if (isLoading) return <p>Loading...</p>;
+
+  console.log(data);
   return (
     <>
       <section className="flex">
@@ -63,9 +51,9 @@ const page = () => {
           </button>
         </div>
         <ul className="grid grid-cols-3 gap-5">
-          {products &&
-            products.map((product) => (
-              <ProductCard product={product} key={product.id} />
+          {data &&
+            data.data.map((product) => (
+              <ProductCard product={product} key={product._id} />
             ))}
         </ul>
       </section>

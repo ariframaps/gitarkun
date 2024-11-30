@@ -1,6 +1,6 @@
 "use client";
 
-import { useShowCart } from "@/context/showCart/ShowCartProvider";
+import { useShowCart } from "@/provider/context/ShowCartProvider";
 import Link from "next/link";
 import CartCard from "./CartCard";
 import { ProductCardType } from "@/lib/types";
