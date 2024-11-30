@@ -2,14 +2,14 @@
 
 import ProductCard from "@/components/ProductCard";
 import { fetchAllProducts } from "@/lib/api";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import React, { useEffect } from "react";
 
 const page = () => {
   const { data, error, isLoading, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ["all-product"],
+      queryKey: ["all-products"],
       queryFn: fetchAllProducts,
       initialPageParam: 0,
       getNextPageParam: (lastPage) => lastPage.nextPage,
@@ -25,8 +25,6 @@ const page = () => {
 
   if (error) return <p>Something went wrong</p>;
   if (isLoading) return <p>Loading...</p>;
-
-  console.log(data);
 
   return (
     <>

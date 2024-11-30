@@ -9,7 +9,7 @@ import { fetchLatestProducts } from "@/lib/api";
 
 const page = () => {
   const { data, error, isLoading } = useQuery({
-    queryKey: ["all-product"],
+    queryKey: ["latest-products"],
     queryFn: fetchLatestProducts,
   });
 

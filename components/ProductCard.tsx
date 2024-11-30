@@ -8,8 +8,12 @@ import React from "react";
 
 const ProductCard = ({ product }: { product: ProductCardType }) => {
   const router = useRouter();
+  console.log(product._id);
+  console.log(typeof product._id);
+  console.log(product);
   function handleClick() {
-    router.push(`/products/${product.id}`);
+    const productUrl = product.name.split(" ").join("_");
+    router.push(`/products/${productUrl}`);
   }
 
   return (
@@ -28,7 +32,7 @@ const ProductCard = ({ product }: { product: ProductCardType }) => {
         <div>
           <span>{product.sellerId}</span>
           <button>
-            <Link href={`/products/${product.id}`} />
+            <Link href={`/products/${product._id}`} />
           </button>
         </div>
       </div>
