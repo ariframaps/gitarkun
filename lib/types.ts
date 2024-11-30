@@ -1,14 +1,3 @@
-export type ProductCardType = {
-  _id: string;
-  name: string;
-  image: string;
-  price: number;
-  sellerId: string;
-  difficulty: "Beginner" | "Intermediate" | "Advanced";
-  category: string;
-  isDeleted: boolean;
-};
-
 export type ProductType = {
   _id: string;
   name: string;
@@ -31,8 +20,16 @@ export type ProductResponseType = {
   totalItems?: number;
 };
 
-export type ProductSoldCardType = ProductCardType & {
+export type CartType = {
+  _id: string;
   userId: string;
+  products: {
+    product: ProductType;
+    price: number;
+  }[];
+  total: number;
+  cratedAt: Date;
+  __v: string;
 };
 
 export type InfinitePageType = {

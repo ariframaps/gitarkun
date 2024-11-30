@@ -1,6 +1,6 @@
 "use server";
 
-import { InfinitePageType, ProductResponseType, ProductType } from "./types";
+import { CartType, InfinitePageType, ProductType } from "./types";
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
@@ -28,4 +28,23 @@ export async function fetchAllProducts({
         ? pageParam + FETCH_LIMIT
         : null,
   };
+}
+
+export async function fetchSingleProduct(
+  searchBy: string,
+  identifier: string
+): Promise<{
+  message: string;
+  data?: ProductType;
+}> {
+  return await fetch(`${SERVER_URL}/product/${searchBy}/${identifier}`).then(
+    (res) => res.json()
+  );
+}
+
+export async function fetchCart(userId: string | null | undefined): Promise<{
+  message: string;
+  data?: CartType;
+}> {
+  return await fetch(`${SERVER_URL}/cart/${userId}`).then((res) => res.json());
 }

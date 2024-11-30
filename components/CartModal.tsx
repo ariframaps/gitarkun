@@ -3,34 +3,18 @@
 import { useShowCart } from "@/provider/context/ShowCartProvider";
 import Link from "next/link";
 import CartCard from "./CartCard";
-import { ProductCardType } from "@/lib/types";
+import { useAuth } from "@clerk/nextjs";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCart } from "@/lib/api";
 
 const CartModal = () => {
   const { showCart, setShowCart } = useShowCart();
+  const { userId } = useAuth();
 
-  const cartItems: ProductCardType[] = [
-    {
-      id: "2",
-      name: "tes title1",
-      image: "/fd/fdas.png",
-      price: 99000,
-      sellerId: "joko",
-    },
-    {
-      id: "1",
-      name: "tes title1",
-      image: "/fd/fdas.png",
-      price: 99000,
-      sellerId: "joko",
-    },
-    {
-      id: "3",
-      name: "tes title1",
-      image: "/fd/fdas.png",
-      price: 99000,
-      sellerId: "joko",
-    },
-  ];
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["cart"],
+    queryFn: () => fetchCart(userId),
+  });
 
   function handleClose() {
     setShowCart(false);
@@ -45,16 +29,16 @@ const CartModal = () => {
           <h3>Cart (total)</h3>
           <p>Your all cart items are here!</p>
           <ul>
-            {cartItems &&
-              cartItems.map((item) => (
-                <CartCard key={item.id} item={item} useInCart={true} />
+            {data?.data &&
+              data.data.products.map((item) => (
+                <CartCard key={item.product._id} item={item} useInCart={true} />
               ))}
           </ul>
         </div>
         <div>
           <div className="flex justify-between">
             <span>Total:</span>
-            <span>Rp 50.000</span>
+            <span>{data?.data?.total || "0"}</span>
           </div>
           <button onClick={handleClose}>
             <Link href={"/checkout"}>Checkout</Link>

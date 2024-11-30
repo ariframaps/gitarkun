@@ -3,15 +3,11 @@
 import React from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import {
-  InfinitePageType,
-  ProductCardType,
-  ProductResponseType,
-  ProductType,
-} from "@/lib/types";
+import { InfinitePageType, ProductType } from "@/lib/types";
 import ProductCard from "@/components/ProductCard";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { InfiniteData } from "@tanstack/react-query";
+import { fetchSingleProduct } from "@/lib/api";
 
 const page = () => {
   const router = useRouter();
@@ -21,15 +17,29 @@ const page = () => {
   const productName = params.name.split("_").join(" ");
   console.log(productName);
 
+  // get from cache if exists
   const cachedProducts = queryClient.getQueryData([
     "all-products",
   ]) as InfiniteData<InfinitePageType>;
   console.log(cachedProducts);
 
-  // find item by product name
-  const product = cachedProducts.pages
-    .flatMap((page) => page.data.data)
-    .find((item) => item?.name === productName);
+  // check if cache is exist
+  let product: ProductType | undefined;
+  if (cachedProducts) {
+    // find item by product name
+    product = cachedProducts.pages
+      .flatMap((page) => page.data.data)
+      .find((item) => item?.name === productName);
+  } else {
+    const { data, error, isLoading } = useQuery({
+      queryKey: [`${productName}`],
+      queryFn: () => fetchSingleProduct("name", params.name),
+    });
+
+    if (error) return <p>Something weng wrong!</p>;
+    if (isLoading) return <p>Loading...</p>;
+    product = data?.data;
+  }
 
   return (
     <>
