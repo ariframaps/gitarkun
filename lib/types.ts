@@ -25,8 +25,20 @@ export type ProductType = {
   __v: string;
 };
 
+export type ProductResponseType = {
+  message: string;
+  data?: ProductType[];
+  totalItems?: number;
+};
+
 export type ProductSoldCardType = ProductCardType & {
   userId: string;
+};
+
+export type InfinitePageType = {
+  data: ProductResponseType;
+  currentPage: number;
+  nextPage: number | null;
 };
 
 export type NavLinkType = {
