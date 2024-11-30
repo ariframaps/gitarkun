@@ -1,12 +1,12 @@
 "use client";
 
-import { ProductCardType } from "@/lib/types";
+import { ProductType } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const ProductCard = ({ product }: { product: ProductCardType }) => {
+const ProductCard = ({ product }: { product: ProductType }) => {
   const router = useRouter();
   console.log(product._id);
   console.log(typeof product._id);
