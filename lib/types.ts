@@ -7,7 +7,7 @@ export type ProductCardType = {
 };
 
 export type ProductType = {
-  id: string;
+  _id: string;
   name: string;
   image: string;
   description: string;
@@ -17,6 +17,12 @@ export type ProductType = {
   link: string;
   sellerId: string;
   isDeleted: false;
+  isCreatedAt: string;
+  isUpdatedAt: string;
+};
+
+export type ProductSoldCardType = ProductCardType & {
+  userId: string;
 };
 
 export type NavLinkType = {
