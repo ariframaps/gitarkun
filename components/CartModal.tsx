@@ -22,8 +22,8 @@ const CartModal = () => {
     setShowCart(false);
   }
 
-  if (error) <p>something went wront</p>;
-  if (isLoading) <p>Loading...</p>;
+  if (error) return <p>something went wront</p>;
+  if (isLoading) return <p>Loading...</p>;
 
   if (!showCart) return;
   return (

@@ -50,7 +50,7 @@ const page = () => {
       name: product?.name,
       image: product?.image,
       price: product?.price,
-    }).then(() => console.log(response));
+    }).then((response) => console.log(response));
   }
 
   return (
