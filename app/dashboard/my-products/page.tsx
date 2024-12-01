@@ -15,6 +15,8 @@ const page = () => {
     queryFn: () => getMyProduct(userId),
   });
 
+  console.log(data);
+
   if (error) return <p>something went wrong</p>;
   if (isLoading) return <p>Loading...</p>;
 
@@ -23,7 +25,7 @@ const page = () => {
       <div className="flex w-full justify-between">
         <span>Your Tabs</span>
         <button>
-          <Link href={"/dashboard/add"}>+ Sell New Tab!</Link>
+          <Link href={"/dashboard/my-products/add"}>+ Sell New Tab!</Link>
         </button>
       </div>
       <ul className="grid grid-cols-3 gap-5">

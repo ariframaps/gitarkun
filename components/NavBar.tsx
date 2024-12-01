@@ -40,7 +40,7 @@ const NavBar = () => {
         <div className="flex gap-5">
           <button onClick={handleShowCart}>Cart</button>
           <button>
-            <Link href={"/dashboard"}>Start Selling</Link>
+            <Link href={"/dashboard/my-products"}>Start Selling</Link>
           </button>
           <SignedIn>
             <UserButton />
