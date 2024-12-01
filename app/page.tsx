@@ -13,10 +13,9 @@ const page = () => {
     queryFn: fetchLatestProducts,
   });
 
-  if (error) return <p>Something went wrong</p>;
-  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>home Something went wrong</p>;
+  if (isLoading) return <p>home Loading...</p>;
 
-  console.log(data);
   return (
     <>
       <section className="flex">

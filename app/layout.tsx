@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import CartModal from "@/components/CartModal";
-import { CartProvider } from "@/provider/context/ShowCartProvider";
+import { CartProvider, useShowCart } from "@/provider/context/ShowCartProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import ReactQueryProvider from "@/provider/ReactQueryProvider";
 

@@ -2,59 +2,98 @@
 
 import ProductCard from "@/components/ProductCard";
 import { fetchAllProducts } from "@/lib/api";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { InfinitePageType, ProductType } from "@/lib/types";
+import { useRouter, useSearchParams } from "next/navigation";
+import FilterSideBar from "@/components/FilterSideBar";
 
 const page = () => {
-  const { data, error, isLoading, fetchNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ["all-products"],
-      queryFn: fetchAllProducts,
-      initialPageParam: 0,
-      getNextPageParam: (lastPage) => lastPage.nextPage,
-    });
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchTerm = searchParams.get("search");
+  console.log(searchTerm);
+  const [searchVal, setSearchVal] = useState("");
 
-  const { ref, inView } = useInView();
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (inView) {
-      fetchNextPage();
-    }
-  }, [fetchNextPage, inView]);
+  const { data, error, isLoading, isSuccess } = useQuery({
+    queryKey: ["all-products"],
+    queryFn: fetchAllProducts,
+  });
 
-  if (error) return <p>Explore Something went wrong</p>;
-  if (isLoading) return <p>explore Loading...</p>;
+  let fetchedData = data?.data;
+  if (searchTerm) {
+    const cache = queryClient.getQueryData(["all-products"]) as
+      | {
+          message: string;
+          data?: ProductType[];
+        }
+      | undefined;
+    fetchedData = cache?.data?.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    console.log(fetchedData);
+  }
 
   return (
-    <>
-      <section className="max-w-5xl mx-auto">
-        <h1>Explore</h1>
-        <div>
-          <form>
-            <span>Search : </span>
-            <input type="text" name="searchInput" id="searchInput" />
-            <button type="submit">Search</button>
-          </form>
-          {/* ini isi dropdown buat filter dan sort*/}
-        </div>
-        <div className="bg-yellow-200 flex flex-col gap-5">
-          {data &&
-            data.pages.map((page) => (
-              <ul
-                key={page.currentPage}
-                className="bg-green-200 grid grid-cols-3 gap-5">
-                {page.data.data?.map((product) => (
-                  <ProductCard product={product} key={product._id} />
-                ))}
-              </ul>
+    <div className="flex">
+      <FilterSideBar />
+      <div className="flex-1">
+        <form onSubmit={() => router.push(`/products?search=${searchVal}`)}>
+          <span>Search : </span>
+          <input
+            type="text"
+            name="search"
+            id="search"
+            value={searchVal}
+            onChange={(e) => setSearchVal(e.target.value)}
+          />
+          <button type="submit">Search</button>
+        </form>
+        {error && <p>Explore Something went wrong</p>}
+        {isLoading && <p>explore Loading...</p>}
+        {isSuccess && (
+          <ul className="grid grid-cols-3 gap-5">
+            {fetchedData?.map((product) => (
+              <ProductCard product={product} key={product._id} />
             ))}
-
-          <div ref={ref}>{isFetchingNextPage && "Loading More Tabs...."}</div>
-        </div>
-      </section>
-    </>
+          </ul>
+        )}
+      </div>
+      {/* <div className="bg-yellow-200 flex flex-col gap-5"></div> */}
+    </div>
   );
 };
 
 export default page;
+
+// {data &&
+//   data.pages.map((page) => (
+//     <ul
+//       key={page.currentPage}
+//       className="bg-green-200 grid grid-cols-3 gap-5">
+//       {/* {page.data.data?.map((product) => (
+//           <ProductCard product={product} key={product._id} />
+//         ))} */}
+//       {page.data.data
+//         ?.filter((product) =>
+//           searchTerm
+//             ? product.name
+//                 .toLowerCase()
+//                 .includes(searchTerm.toLowerCase())
+//             : true
+//         )
+//         .map((product) => (
+//           <ProductCard product={product} key={product._id} />
+//         )) || <p>No products found</p>}
+//     </ul>
+//   ))}
+
+// <div ref={ref}>{isFetchingNextPage && "Loading More Tabs...."}</div>

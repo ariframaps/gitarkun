@@ -17,23 +17,30 @@ export async function fetchLatestProducts(): Promise<{
   return await fetch(`${SERVER_URL}/product/latest`).then((res) => res.json());
 }
 
-export async function fetchAllProducts({
-  pageParam,
-}: {
-  pageParam: number;
-}): Promise<InfinitePageType> {
-  const FETCH_LIMIT = 9;
-  const response = await fetch(`${SERVER_URL}/product`);
-  const data = await response.json();
+// export async function fetchAllProducts({
+//   pageParam,
+// }: {
+//   pageParam: number;
+// }): Promise<InfinitePageType> {
+//   const FETCH_LIMIT = 9;
+//   const response = await fetch(`${SERVER_URL}/product`);
+//   let data = await response.json();
 
-  return {
-    data: data,
-    currentPage: pageParam,
-    nextPage:
-      pageParam + FETCH_LIMIT < data.totalItems
-        ? pageParam + FETCH_LIMIT
-        : null,
-  };
+//   return {
+//     data: data,
+//     currentPage: pageParam,
+//     nextPage:
+//       pageParam + FETCH_LIMIT < data.totalItems
+//         ? pageParam + FETCH_LIMIT
+//         : null,
+//   };
+// }
+
+export async function fetchAllProducts(): Promise<{
+  message: string;
+  data?: ProductType[];
+}> {
+  return await fetch(`${SERVER_URL}/product`).then((res) => res.json());
 }
 
 export async function fetchSingleProductByName(name: string): Promise<{

@@ -8,50 +8,48 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCart } from "@/lib/api";
 
 const CartModal = () => {
-  // const { showCart, setShowCart } = useShowCart();
-  // const { userId } = useAuth();
+  const { showCart, setShowCart } = useShowCart();
+  if (!showCart) return;
+  const { userId } = useAuth();
 
-  // const { data, error, isLoading } = useQuery({
-  //   queryKey: ["cart"],
-  //   queryFn: () => fetchCart(userId),
-  // });
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["cart"],
+    queryFn: () => fetchCart(userId),
+  });
 
-  // console.log(data);
+  function handleClose() {
+    setShowCart(false);
+  }
 
-  // function handleClose() {
-  //   setShowCart(false);
-  // }
+  if (error) return <p> cart something went wront</p>;
+  if (isLoading) return <p>cart Loading...</p>;
 
-  // if (error) return <p>something went wront</p>;
-  // if (isLoading) return <p>Loading...</p>;
-
-  // if (!showCart) return;
+  if (!showCart) return;
   return (
-    // <div className="fixed inset-0 bg-white/60 flex justify-center items-center">
-    //   <div>
-    //     <button onClick={handleClose}>Close</button>
-    //     <div>
-    //       <h3>Cart (total)</h3>
-    //       <p>Your all cart items are here!</p>
-    //       <ul>
-    //         {data?.data &&
-    //           data.data.products.map((item) => (
-    //             <CartCard key={item.name} item={item} useInCart={true} />
-    //           ))}
-    //       </ul>
-    //     </div>
-    //     <div>
-    //       <div className="flex justify-between">
-    //         <span>Total:</span>
-    //         <span>{data?.data?.total || 0}</span>
-    //       </div>
-    //       <button onClick={handleClose}>
-    //         <Link href={"/checkout"}>Checkout</Link>
-    //       </button>
-    //     </div>
-    //   </div>
-    // </div>
-    <p>miaw</p>
+    <div className="fixed inset-0 bg-white/60 flex justify-center items-center">
+      <div>
+        <button onClick={handleClose}>Close</button>
+        <div>
+          <h3>Cart (total)</h3>
+          <p>Your all cart items are here!</p>
+          <ul>
+            {data?.data &&
+              data.data.products.map((item) => (
+                <CartCard key={item.name} item={item} useInCart={true} />
+              ))}
+          </ul>
+        </div>
+        <div>
+          <div className="flex justify-between">
+            <span>Total:</span>
+            <span>{data?.data?.total || 0}</span>
+          </div>
+          <button onClick={handleClose}>
+            <Link href={"/checkout"}>Checkout</Link>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
