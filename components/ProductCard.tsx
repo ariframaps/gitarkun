@@ -2,16 +2,12 @@
 
 import { ProductType } from "@/lib/types";
 import { CldImage } from "next-cloudinary";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 const ProductCard = ({ product }: { product: ProductType }) => {
   const router = useRouter();
-  console.log(product._id);
-  console.log(typeof product._id);
-  console.log(product);
   function handleClick() {
     const productUrl = product.name.split(" ").join("_");
     router.push(`/products/${productUrl}`);

@@ -23,8 +23,8 @@ const page = () => {
     }
   }, [fetchNextPage, inView]);
 
-  if (error) return <p>Something went wrong</p>;
-  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Explore Something went wrong</p>;
+  if (isLoading) return <p>explore Loading...</p>;
 
   return (
     <>

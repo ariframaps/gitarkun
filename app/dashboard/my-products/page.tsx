@@ -17,8 +17,8 @@ const page = () => {
 
   console.log(data);
 
-  if (error) return <p>something went wrong</p>;
-  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>my products something went wrong</p>;
+  if (isLoading) return <p>my products Loading...</p>;
 
   return (
     <div>
