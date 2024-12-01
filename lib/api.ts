@@ -81,6 +81,18 @@ export async function addProduct(product: ProductType): Promise<{
   }).then((res) => res.json());
 }
 
+export async function addOrder(userId: string | undefined | null): Promise<{
+  message: string;
+  data?: ProductType;
+}> {
+  return await fetch(`${SERVER_URL}/order/${userId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((res) => res.json());
+}
+
 export async function getMyProduct(userId: string | undefined | null): Promise<{
   message: string;
   data?: ProductType[];
@@ -105,7 +117,13 @@ export async function fetchPurchasedProducts(
   userId: string | undefined | null
 ): Promise<{
   message: string;
-  data?: AnalyticsType;
+  data?: {
+    name: string;
+    image: string;
+    category: string;
+    link: string;
+    isDeleted: boolean;
+  }[];
 }> {
   return await fetch(`${SERVER_URL}/order/${userId}`).then((res) => res.json());
 }

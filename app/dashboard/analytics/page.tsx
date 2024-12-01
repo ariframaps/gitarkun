@@ -13,8 +13,8 @@ const Analytics = () => {
     queryFn: () => fetchAnalytics(userId),
   });
 
-  if (error) return <p>something went worn g</p>;
-  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>analytics something went worn g</p>;
+  if (isLoading) return <p>analytics Loading...</p>;
   if (!data?.data) return <p>no product sold</p>;
 
   console.log(data);

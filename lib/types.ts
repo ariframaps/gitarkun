@@ -20,6 +20,8 @@ export type ProductResponseType = {
   totalItems?: number;
 };
 
+export type OrderType = {};
+
 export type AnalyticsType = {
   sellerId: string;
   totalSales: number;
