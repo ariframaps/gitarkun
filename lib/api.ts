@@ -75,3 +75,14 @@ export async function getMyProduct(userId: string | undefined | null): Promise<{
     res.json()
   );
 }
+
+export async function fetchAnalytics(
+  userId: string | undefined | null
+): Promise<{
+  message: string;
+  data?: ProductType[];
+}> {
+  return await fetch(`${SERVER_URL}/product/my/${userId}`).then((res) =>
+    res.json()
+  );
+}
