@@ -1,14 +1,11 @@
+import { useFilter } from "@/provider/context/filterContext";
 import React from "react";
 
 const FilterSideBar = () => {
-  //   const {
-  //     state,
-  //     bestSellerDispatch,
-  //     inStockDispatch,
-  //     ratingDispatch,
-  //     priceDispatch,
-  //     clearDispatch,
-  //   } = useFilter();
+  const { state, difficultyDispatch, priceDispatch, clearDispatch } =
+    useFilter();
+
+  console.log(state);
 
   return (
     <div className="me-5">
@@ -18,8 +15,8 @@ const FilterSideBar = () => {
           <span className="font-semibold text-lg">Sort by</span>
           <div>
             <input
-              //   onChange={(e) => priceDispatch(e.target.value)}
-              //   checked={state.priceFilter === "lowToHigh"}
+              onChange={(e) => priceDispatch(e.target.value)}
+              checked={state.priceFilter === "lowToHigh"}
               value="lowToHigh"
               type="radio"
               name="price"
@@ -30,8 +27,8 @@ const FilterSideBar = () => {
           </div>
           <div>
             <input
-              //   onChange={(e) => priceDispatch(e.target.value)}
-              //   checked={state.priceFilter === "highToLow"}
+              onChange={(e) => priceDispatch(e.target.value)}
+              checked={state.priceFilter === "highToLow"}
               value="highToLow"
               type="radio"
               name="price"
@@ -45,8 +42,8 @@ const FilterSideBar = () => {
             <span className="font-semibold text-lg">Difficulty</span>
             <div>
               <input
-                // onChange={(e) => ratingDispatch(e.target.value)}
-                // checked={state.ratingFilter === "stars_4"}
+                onChange={(e) => difficultyDispatch(e.target.value)}
+                checked={state.difficultyFilter === "Beginner"}
                 value="Beginner"
                 type="radio"
                 name="difficulties"
@@ -57,8 +54,8 @@ const FilterSideBar = () => {
             </div>
             <div>
               <input
-                // onChange={(e) => ratingDispatch(e.target.value)}
-                // checked={state.ratingFilter === "stars_3"}
+                onChange={(e) => difficultyDispatch(e.target.value)}
+                checked={state.difficultyFilter === "Intermediate"}
                 value="Intermediate"
                 type="radio"
                 name="difficulties"
@@ -69,8 +66,8 @@ const FilterSideBar = () => {
             </div>
             <div>
               <input
-                // onChange={(e) => ratingDispatch(e.target.value)}
-                // checked={state.ratingFilter === "stars_2"}
+                onChange={(e) => difficultyDispatch(e.target.value)}
+                checked={state.difficultyFilter === "Advanced"}
                 value="Advanced"
                 type="radio"
                 name="difficulties"
@@ -81,7 +78,7 @@ const FilterSideBar = () => {
             </div>
           </div>
           <button
-            // onClick={() => clearDispatch()}
+            onClick={() => clearDispatch()}
             className="w-full border py-3 bg-slate-200 hover:bg-slate-300 font-bold">
             Clear
           </button>

@@ -32,16 +32,17 @@ const page = () => {
   console.log(productName);
 
   // get from cache if exists
-  const cachedProducts = queryClient.getQueryData([
-    "all-products",
-  ]) as ProductType[];
+  const cachedProducts = queryClient.getQueryData(["all-products"]) as {
+    message: string;
+    data: ProductType[];
+  };
   console.log(cachedProducts);
 
   // check if cache is exist
   let product: ProductType | undefined;
   if (cachedProducts) {
     // find item by product name
-    product = cachedProducts.find((item) => item?.name === productName);
+    product = cachedProducts.data.find((item) => item?.name === productName);
   } else {
     const { data, error, isLoading } = useQuery({
       queryKey: [`${productName}`],

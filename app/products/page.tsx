@@ -13,34 +13,47 @@ import React, { useEffect, useState } from "react";
 import { InfinitePageType, ProductType } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import FilterSideBar from "@/components/FilterSideBar";
+import { useFilter } from "@/provider/context/filterContext";
 
 const page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get("search");
-  console.log(searchTerm);
   const [searchVal, setSearchVal] = useState("");
-
   const queryClient = useQueryClient();
+  const { productsList, initialProductsList } = useFilter();
+  const [filteredData, setFilteredData] = useState<ProductType[] | null>(null);
 
   const { data, error, isLoading, isSuccess } = useQuery({
     queryKey: ["all-products"],
     queryFn: fetchAllProducts,
   });
 
-  let fetchedData = data?.data;
-  if (searchTerm) {
-    const cache = queryClient.getQueryData(["all-products"]) as
-      | {
-          message: string;
-          data?: ProductType[];
+  useEffect(() => {
+    function fetchFromCache() {
+      if (searchTerm) {
+        const cache = queryClient.getQueryData(["all-products"]) as
+          | {
+              message: string;
+              data?: ProductType[];
+            }
+          | undefined;
+
+        if (cache?.data) {
+          const filtered = cache.data.filter((product) =>
+            product.name.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+          setFilteredData(filtered);
+          initialProductsList(filtered); // Simpan data hasil filter ke context
         }
-      | undefined;
-    fetchedData = cache?.data?.filter((product) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    console.log(fetchedData);
-  }
+      } else if (data?.data) {
+        setFilteredData(data.data);
+        initialProductsList(data.data); // Simpan semua data jika tidak ada pencarian
+      }
+    }
+
+    fetchFromCache();
+  }, [searchTerm, data]);
 
   return (
     <div className="flex">
@@ -61,7 +74,7 @@ const page = () => {
         {isLoading && <p>explore Loading...</p>}
         {isSuccess && (
           <ul className="grid grid-cols-3 gap-5">
-            {fetchedData?.map((product) => (
+            {productsList.map((product) => (
               <ProductCard product={product} key={product._id} />
             ))}
           </ul>

@@ -4,18 +4,6 @@ import { createContext, useContext, useReducer } from "react";
 import { CartReducer } from "../reducer/CartReducer";
 import { CartProductInfo } from "@/lib/types";
 
-// type ShowCartContextType = {
-//   showCart: boolean;
-//   setShowCart: Dispatch<React.SetStateAction<boolean>>;
-// };
-
-// const defaultValue: ShowCartContextType = {
-//   showCart: false,
-//   setShowCart: () => {},
-// };
-
-// const ShowCartContext = createContext<ShowCartContextType>(defaultValue);
-
 type CartContextType = {
   cartList: CartProductInfo[];
   totalPrice: number;

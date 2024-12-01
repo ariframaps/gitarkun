@@ -6,6 +6,7 @@ import { ShowCartProvider } from "@/provider/context/ShowCartContext";
 import { ClerkProvider } from "@clerk/nextjs";
 import ReactQueryProvider from "@/provider/ReactQueryProvider";
 import { CartProvider } from "@/provider/context/CartContext";
+import { FilterProvider } from "@/provider/context/filterContext";
 
 export const metadata: Metadata = {
   title: "Gitar-Kun",
@@ -21,15 +22,17 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <ReactQueryProvider>
-          <CartProvider>
-            <ShowCartProvider>
-              <body>
-                <NavBar />
-                <main>{children}</main>
-                <CartModal />
-              </body>
-            </ShowCartProvider>
-          </CartProvider>
+          <FilterProvider>
+            <CartProvider>
+              <ShowCartProvider>
+                <body>
+                  <NavBar />
+                  <main>{children}</main>
+                  <CartModal />
+                </body>
+              </ShowCartProvider>
+            </CartProvider>
+          </FilterProvider>
         </ReactQueryProvider>
       </html>
     </ClerkProvider>
