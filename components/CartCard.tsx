@@ -1,4 +1,5 @@
 import { CartProductInfo, ProductType } from "@/lib/types";
+import { CldImage } from "next-cloudinary";
 import Image from "next/image";
 import React from "react";
 
@@ -13,7 +14,7 @@ const CartCard = ({
   return (
     <li className="flex justify-between">
       <div>
-        <Image
+        <CldImage
           src={item.image || ""}
           alt={item.name || ""}
           width={100}

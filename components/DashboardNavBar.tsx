@@ -2,7 +2,7 @@ import { NavLinkType } from "@/lib/types";
 import Link from "next/link";
 
 const dashboarNavLinks: NavLinkType[] = [
-  { name: "Your Tabs", href: "/dashboard" },
+  { name: "Your Tabs", href: "/dashboard/my-products" },
   { name: "Analytics", href: "/dashboard/analytics" },
   { name: "Purchased", href: "/dashboard/purchased" },
 ];

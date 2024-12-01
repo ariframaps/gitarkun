@@ -7,10 +7,13 @@ export const addProductSchema = z.object({
     .max(255, "Product name must not exceed 255 characters")
     .trim()
     .regex(/^[^\s]+(\s+[^\s]+)*$/, "Product name cannot have trailing spaces"),
-  image: z
-    .string()
-    .min(1, "Product image is required")
-    .url("Image must be a valid URL"),
+  // image: z
+  //   .any()
+  //   .refine((file) => file?.size <= 5, `Max image size is 5MB.`)
+  //   .refine(
+  //     (file) => [".jpg", ".jpeg", ".png", "webp"].includes(file?.type),
+  //     "Only .jpg, .jpeg, .png and .webp formats are supported."
+  //   ),
   description: z
     .string()
     .min(10, "Description should be at least 10 characters long")
@@ -23,8 +26,6 @@ export const addProductSchema = z.object({
   }),
   category: z.string().min(1, "Product category is required").trim(),
   link: z.string().url("Product link must be a valid URL"),
-  sellerId: z.string().min(1, "Seller ID is required"),
-  isDeleted: z.boolean().optional(),
 });
 
 // Contoh validasi

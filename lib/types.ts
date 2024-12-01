@@ -1,5 +1,5 @@
 export type ProductType = {
-  _id: string;
+  _id?: string;
   name: string;
   image: string;
   description: string;
@@ -7,17 +7,28 @@ export type ProductType = {
   difficulty: "Beginner" | "Intermediate" | "Advanced";
   category: string;
   link: string;
-  sellerId: string;
-  isDeleted: false;
-  isCreatedAt: string;
-  isUpdatedAt: string;
-  __v: string;
+  sellerId: string | undefined | null;
+  isDeleted: boolean;
+  isCreatedAt?: string;
+  isUpdatedAt?: string;
+  __v?: string;
 };
 
 export type ProductResponseType = {
   message: string;
   data?: ProductType[];
   totalItems?: number;
+};
+
+export type AnalyticsType = {
+  sellerId: string;
+  totalSales: number;
+  totalRevenue: number;
+  productStats: {
+    product: ProductType;
+    salesCount: number;
+    revenue: number;
+  }[];
 };
 
 export type CartType = {

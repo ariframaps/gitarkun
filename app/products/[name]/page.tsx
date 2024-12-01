@@ -9,6 +9,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { InfiniteData } from "@tanstack/react-query";
 import { addCart, fetchSingleProductByName } from "@/lib/api";
 import { useAuth } from "@clerk/nextjs";
+import { CldImage } from "next-cloudinary";
 
 const page = () => {
   const router = useRouter();
@@ -61,7 +62,7 @@ const page = () => {
         </button>
         <div className="flex">
           <div className="bg-red-300 flex-1">
-            <Image
+            <CldImage
               src={product?.image || "/fdsafasd/fdsafdsa/png"} // need to fix the undefined imaage
               alt={product?.name || "GitarKun"}
               width={100}

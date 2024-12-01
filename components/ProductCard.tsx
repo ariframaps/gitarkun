@@ -1,6 +1,7 @@
 "use client";
 
 import { ProductType } from "@/lib/types";
+import { CldImage } from "next-cloudinary";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -19,7 +20,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
   return (
     <li className="bg-red-300 cursor-pointer">
       <div onClick={handleClick}>
-        <Image
+        <CldImage
           src={product.image}
           alt={product.name}
           width={400}

@@ -1,5 +1,6 @@
 "use client";
 
+import ProductSoldCard from "@/components/ProductSoldCard";
 import { fetchAnalytics } from "@/lib/api";
 import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
@@ -23,11 +24,16 @@ const Analytics = () => {
       <div>
         <span>Analytics</span>
         <div>
-          <p>Total of product sold: 13</p>
-          <p>Total revenue: Rp 480.000</p>
+          <p>Total of product sold: {data.data.totalSales}</p>
+          <p>Total revenue: Rp {data.data.totalRevenue}</p>
         </div>
       </div>
-      <div>item</div>
+      <ul>
+        {data.data &&
+          data.data.productStats.map((product) => (
+            <ProductSoldCard product={product} key={product.product._id} />
+          ))}
+      </ul>
     </div>
   );
 };

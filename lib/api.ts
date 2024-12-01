@@ -1,6 +1,7 @@
 "use server";
 
 import {
+  AnalyticsType,
   CartProductInfo,
   CartType,
   InfinitePageType,
@@ -67,6 +68,19 @@ export async function addCart(
   }).then((res) => res.json());
 }
 
+export async function addProduct(product: ProductType): Promise<{
+  message: string;
+  data?: ProductType;
+}> {
+  return await fetch(`${SERVER_URL}/product/my`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(product),
+  }).then((res) => res.json());
+}
+
 export async function getMyProduct(userId: string | undefined | null): Promise<{
   message: string;
   data?: ProductType[];
@@ -80,9 +94,18 @@ export async function fetchAnalytics(
   userId: string | undefined | null
 ): Promise<{
   message: string;
-  data?: ProductType[];
+  data?: AnalyticsType;
 }> {
   return await fetch(`${SERVER_URL}/product/my/${userId}`).then((res) =>
     res.json()
   );
+}
+
+export async function fetchPurchasedProducts(
+  userId: string | undefined | null
+): Promise<{
+  message: string;
+  data?: AnalyticsType;
+}> {
+  return await fetch(`${SERVER_URL}/order/${userId}`).then((res) => res.json());
 }

@@ -2,10 +2,24 @@
 
 import { addProductSchema, AddProductType } from "@/models/AddProductForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { CldUploadWidget, CloudinaryUploadWidgetInfo } from "next-cloudinary";
+import { useAuth } from "@clerk/nextjs";
+import { addProduct } from "@/lib/api";
 
 const page = () => {
+  const { userId } = useAuth();
+
+  const [uploadResult, setUploadResult] = useState<string | undefined>();
+  const [formData, setFormData] = useState<AddProductType>();
+
+  useEffect(() => {
+    if (uploadResult && formData) {
+      handleAddProduct();
+    }
+  }, [uploadResult, formData]);
+
   const {
     register,
     handleSubmit,
@@ -14,20 +28,29 @@ const page = () => {
     resolver: zodResolver(addProductSchema),
   });
 
-  function onSubmit(data: AddProductType) {
-    console.log(data);
+  async function handleAddProduct() {
+    console.log(uploadResult, "uploadResult");
+    console.log(formData, "formData");
+
+    let product;
+    if (uploadResult && formData) {
+      product = {
+        ...formData,
+        image: uploadResult,
+        sellerId: userId,
+        isDeleted: false,
+      };
+
+      const response = await addProduct(product);
+      console.log(response);
+    }
   }
 
   if (isLoading) return <p>Loading...</p>;
 
   return (
     <section className="m-16 bg-green-200">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="image">upload image</label>
-          <input type="file" id="image" {...register("image")} />
-          <span className="text-red-500 text-sm">{errors.image?.message}</span>
-        </div>
+      <form onSubmit={handleSubmit((data) => setFormData(data))}>
         <div>
           <label htmlFor="name">Product Title</label>
           <input type="text" id="name" {...register("name")} />
@@ -35,7 +58,11 @@ const page = () => {
         </div>
         <div>
           <label htmlFor="price">Price</label>
-          <input type="text" id="price" {...register("price")} />
+          <input
+            type="number"
+            id="price"
+            {...register("price", { valueAsNumber: true })}
+          />
           <span className="text-red-500 text-sm">{errors.price?.message}</span>
         </div>
         <div>
@@ -65,7 +92,28 @@ const page = () => {
           <input type="text" id="link" {...register("link")} />
           <span className="text-red-500 text-sm">{errors.link?.message}</span>
         </div>
-        <button type="submit">add tab</button>
+        <CldUploadWidget
+          uploadPreset="next_gitarkun_webapp"
+          onSuccess={({ event, info }) => {
+            if (event === "success" && info && typeof info === "object") {
+              setUploadResult(info.public_id);
+            }
+          }}>
+          {({ open }) => {
+            return (
+              <button
+                onClick={() => {
+                  if (Object.keys(errors).length !== 0) {
+                    return;
+                  } else {
+                    return open();
+                  }
+                }}>
+                Next
+              </button>
+            );
+          }}
+        </CldUploadWidget>
       </form>
     </section>
   );
