@@ -7,12 +7,14 @@ import { InfinitePageType, ProductType } from "@/lib/types";
 import ProductCard from "@/components/ProductCard";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { InfiniteData } from "@tanstack/react-query";
-import { fetchSingleProduct } from "@/lib/api";
+import { addCart, fetchSingleProductByName } from "@/lib/api";
+import { useAuth } from "@clerk/nextjs";
 
 const page = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const params = useParams() as { name: string };
+  const { userId } = useAuth();
 
   const productName = params.name.split("_").join(" ");
   console.log(productName);
@@ -33,12 +35,22 @@ const page = () => {
   } else {
     const { data, error, isLoading } = useQuery({
       queryKey: [`${productName}`],
-      queryFn: () => fetchSingleProduct("name", params.name),
+      queryFn: () => fetchSingleProductByName(params.name),
     });
+    console.log(data);
 
     if (error) return <p>Something weng wrong!</p>;
     if (isLoading) return <p>Loading...</p>;
     product = data?.data;
+  }
+
+  async function handleAddToCart() {
+    await addCart(userId, {
+      productId: product?._id,
+      name: product?.name,
+      image: product?.image,
+      price: product?.price,
+    }).then(() => console.log(response));
   }
 
   return (
@@ -63,7 +75,8 @@ const page = () => {
             </div>
             <h2>{product?.price}</h2>
             <p>{product?.description}</p>
-            <button>Add to Cart</button>
+            <p>{product?.difficulty}</p>
+            <button onClick={handleAddToCart}>Add to Cart</button>
             <div>
               <span>Seller : {product?.sellerId}</span>
             </div>

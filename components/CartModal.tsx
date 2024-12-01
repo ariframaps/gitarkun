@@ -16,9 +16,14 @@ const CartModal = () => {
     queryFn: () => fetchCart(userId),
   });
 
+  console.log(data);
+
   function handleClose() {
     setShowCart(false);
   }
+
+  if (error) <p>something went wront</p>;
+  if (isLoading) <p>Loading...</p>;
 
   if (!showCart) return;
   return (
@@ -31,14 +36,14 @@ const CartModal = () => {
           <ul>
             {data?.data &&
               data.data.products.map((item) => (
-                <CartCard key={item.product._id} item={item} useInCart={true} />
+                <CartCard key={item.name} item={item} useInCart={true} />
               ))}
           </ul>
         </div>
         <div>
           <div className="flex justify-between">
             <span>Total:</span>
-            <span>{data?.data?.total || "0"}</span>
+            <span>{data?.data?.total || 0}</span>
           </div>
           <button onClick={handleClose}>
             <Link href={"/checkout"}>Checkout</Link>

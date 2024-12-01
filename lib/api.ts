@@ -1,6 +1,11 @@
 "use server";
 
-import { CartType, InfinitePageType, ProductType } from "./types";
+import {
+  CartProductInfo,
+  CartType,
+  InfinitePageType,
+  ProductType,
+} from "./types";
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
@@ -30,15 +35,12 @@ export async function fetchAllProducts({
   };
 }
 
-export async function fetchSingleProduct(
-  searchBy: string,
-  identifier: string
-): Promise<{
+export async function fetchSingleProductByName(name: string): Promise<{
   message: string;
   data?: ProductType;
 }> {
-  return await fetch(`${SERVER_URL}/product/${searchBy}/${identifier}`).then(
-    (res) => res.json()
+  return await fetch(`${SERVER_URL}/product/name/${name}`).then((res) =>
+    res.json()
   );
 }
 
@@ -47,4 +49,20 @@ export async function fetchCart(userId: string | null | undefined): Promise<{
   data?: CartType;
 }> {
   return await fetch(`${SERVER_URL}/cart/${userId}`).then((res) => res.json());
+}
+
+export async function addCart(
+  userId: string | null | undefined,
+  product: CartProductInfo
+): Promise<{
+  message: string;
+  data?: CartType;
+}> {
+  return await fetch(`${SERVER_URL}/cart`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId, product }),
+  }).then((res) => res.json());
 }

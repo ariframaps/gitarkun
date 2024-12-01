@@ -23,13 +23,17 @@ export type ProductResponseType = {
 export type CartType = {
   _id: string;
   userId: string;
-  products: {
-    product: ProductType;
-    price: number;
-  }[];
+  products: CartProductInfo[];
   total: number;
   cratedAt: Date;
   __v: string;
+};
+
+export type CartProductInfo = {
+  productId: string | undefined;
+  name: string | undefined;
+  image: string | undefined;
+  price: number | undefined;
 };
 
 export type InfinitePageType = {
