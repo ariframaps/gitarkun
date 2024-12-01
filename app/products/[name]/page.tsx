@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { InfinitePageType, ProductType } from "@/lib/types";
@@ -10,12 +10,23 @@ import { InfiniteData } from "@tanstack/react-query";
 import { addCart, fetchSingleProductByName } from "@/lib/api";
 import { useAuth } from "@clerk/nextjs";
 import { CldImage } from "next-cloudinary";
+import { useCart } from "@/provider/context/CartContext";
 
 const page = () => {
+  const { cartList, removeFromCart } = useCart();
   const router = useRouter();
   const queryClient = useQueryClient();
   const params = useParams() as { name: string };
-  const { userId } = useAuth();
+  const { addToCart } = useCart();
+
+  const [isInCart, setIsInCart] = useState(false); // is product in cart list check
+
+  useEffect(() => {
+    const find = cartList.find(
+      (cartItem) => cartItem.name === params.name.split("_").join(" ")
+    );
+    setIsInCart(!!find);
+  }, [cartList]);
 
   const productName = params.name.split("_").join(" ");
   console.log(productName);
@@ -23,35 +34,46 @@ const page = () => {
   // get from cache if exists
   const cachedProducts = queryClient.getQueryData([
     "all-products",
-  ]) as InfiniteData<InfinitePageType>;
+  ]) as ProductType[];
   console.log(cachedProducts);
 
   // check if cache is exist
   let product: ProductType | undefined;
   if (cachedProducts) {
     // find item by product name
-    product = cachedProducts.pages
-      .flatMap((page) => page.data.data)
-      .find((item) => item?.name === productName);
+    product = cachedProducts.find((item) => item?.name === productName);
   } else {
     const { data, error, isLoading } = useQuery({
       queryKey: [`${productName}`],
       queryFn: () => fetchSingleProductByName(params.name),
     });
-    console.log(data);
 
-    if (error) return <p>Something weng wrong!</p>;
-    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p>single product Something weng wrong!</p>;
+    if (isLoading) return <p>single product Loading...</p>;
     product = data?.data;
   }
 
   async function handleAddToCart() {
-    await addCart(userId, {
+    // await addCart(userId, {
+    //   productId: product?._id,
+    //   name: product?.name,
+    //   image: product?.image,
+    //   price: product?.price,
+    // }).then((response) => console.log(response));
+    const cartItem = {
       productId: product?._id,
       name: product?.name,
       image: product?.image,
       price: product?.price,
-    }).then((response) => console.log(response));
+    };
+    if (product && !isInCart) {
+      addToCart(cartItem);
+      return;
+    }
+    if (isInCart) {
+      removeFromCart(cartItem);
+      return;
+    }
   }
 
   return (
@@ -77,7 +99,9 @@ const page = () => {
             <h2>{product?.price}</h2>
             <p>{product?.description}</p>
             <p>{product?.difficulty}</p>
-            <button onClick={handleAddToCart}>Add to Cart</button>
+            <button onClick={handleAddToCart}>
+              {isInCart ? "Remove" : "Add to cart"}
+            </button>
             <div>
               <span>Seller : {product?.sellerId}</span>
             </div>

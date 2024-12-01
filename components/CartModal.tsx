@@ -1,30 +1,19 @@
 "use client";
 
-import { useShowCart } from "@/provider/context/ShowCartProvider";
+import { useShowCart } from "@/provider/context/ShowCartContext";
 import Link from "next/link";
 import CartCard from "./CartCard";
-import { useAuth } from "@clerk/nextjs";
-import { useQuery } from "@tanstack/react-query";
-import { fetchCart } from "@/lib/api";
+import { useCart } from "@/provider/context/CartContext";
 
 const CartModal = () => {
+  const { cartList, totalPrice } = useCart();
   const { showCart, setShowCart } = useShowCart();
-  if (!showCart) return;
-  const { userId } = useAuth();
-
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["cart"],
-    queryFn: () => fetchCart(userId),
-  });
 
   function handleClose() {
     setShowCart(false);
   }
+  if (!showCart) return null;
 
-  if (error) return <p> cart something went wront</p>;
-  if (isLoading) return <p>cart Loading...</p>;
-
-  if (!showCart) return;
   return (
     <div className="fixed inset-0 bg-white/60 flex justify-center items-center">
       <div>
@@ -33,8 +22,8 @@ const CartModal = () => {
           <h3>Cart (total)</h3>
           <p>Your all cart items are here!</p>
           <ul>
-            {data?.data &&
-              data.data.products.map((item) => (
+            {cartList &&
+              cartList.map((item) => (
                 <CartCard key={item.name} item={item} useInCart={true} />
               ))}
           </ul>
@@ -42,7 +31,7 @@ const CartModal = () => {
         <div>
           <div className="flex justify-between">
             <span>Total:</span>
-            <span>{data?.data?.total || 0}</span>
+            <span>{totalPrice || 0}</span>
           </div>
           <button onClick={handleClose}>
             <Link href={"/checkout"}>Checkout</Link>

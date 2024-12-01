@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import CartModal from "@/components/CartModal";
-import { CartProvider, useShowCart } from "@/provider/context/ShowCartProvider";
+import { ShowCartProvider } from "@/provider/context/ShowCartContext";
 import { ClerkProvider } from "@clerk/nextjs";
 import ReactQueryProvider from "@/provider/ReactQueryProvider";
+import { CartProvider } from "@/provider/context/CartContext";
 
 export const metadata: Metadata = {
   title: "Gitar-Kun",
@@ -21,11 +22,13 @@ export default function RootLayout({
       <html lang="en">
         <ReactQueryProvider>
           <CartProvider>
-            <body>
-              <NavBar />
-              <main>{children}</main>
-              <CartModal />
-            </body>
+            <ShowCartProvider>
+              <body>
+                <NavBar />
+                <main>{children}</main>
+                <CartModal />
+              </body>
+            </ShowCartProvider>
           </CartProvider>
         </ReactQueryProvider>
       </html>

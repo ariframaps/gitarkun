@@ -14,7 +14,11 @@ const defaultValue: ShowCartContextType = {
 
 const ShowCartContext = createContext<ShowCartContextType>(defaultValue);
 
-export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+export const ShowCartProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [showCart, setShowCart] = useState(false);
 
   return (

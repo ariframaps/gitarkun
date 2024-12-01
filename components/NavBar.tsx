@@ -1,11 +1,12 @@
 "use client";
 
-import { useShowCart } from "@/provider/context/ShowCartProvider";
+import { useShowCart } from "@/provider/context/ShowCartContext";
 import { NavLinkType } from "@/lib/types";
 import { SignedIn, UserButton, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { useCart } from "@/provider/context/CartContext";
 
 const navLinks: NavLinkType[] = [
   { name: "Home", href: "/" },
@@ -13,6 +14,7 @@ const navLinks: NavLinkType[] = [
 ];
 
 const NavBar = () => {
+  const { cartList } = useCart();
   const { setShowCart } = useShowCart();
   const router = useRouter();
 
@@ -38,7 +40,7 @@ const NavBar = () => {
           ))}
         </div>
         <div className="flex gap-5">
-          <button onClick={handleShowCart}>Cart</button>
+          <button onClick={handleShowCart}>Cart: {cartList.length}</button>
           <button>
             <Link href={"/dashboard/my-products"}>Start Selling</Link>
           </button>
