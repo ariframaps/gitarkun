@@ -77,6 +77,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const newCartList = state.cartList.filter(
       (cartItem) => cartItem.productId !== product.productId
     );
+    console.log(product, "ini yang dikirm ke context");
     const newTotalPrice = state.totalPrice - (product.price || 0);
 
     dispatch({
@@ -86,15 +87,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         totalPrice: newTotalPrice,
       },
     });
-
-    await fetch(
-      `${process.env.SERVER_URL}/cart?userId=${useAuth().userId}&productId=${
-        product.productId
-      }&price=${product.price}`,
-      {
-        method: "DELETE",
-      }
-    );
   }
 
   function clearCart() {

@@ -3,10 +3,20 @@
 import CartCard from "@/components/CartCard";
 import { addOrder, fetchCart } from "@/lib/api";
 import { useAuth } from "@clerk/nextjs";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+
+export type AddOrderPayload = {
+  userId: string | null | undefined;
+};
 
 const page = () => {
+  const router = useRouter();
   const { userId, isSignedIn } = useAuth();
+
+  const { mutate } = useMutation({
+    mutationFn: addOrder,
+  });
 
   const { data, error, isLoading } = useQuery({
     queryKey: ["cart"],
@@ -17,8 +27,9 @@ const page = () => {
   console.log(data, "cart di checkout");
 
   async function handleAddOrder() {
-    const response = await addOrder(userId);
-    console.log(response);
+    console.log(userId, "ini user id wakt uadd order di checkout");
+    mutate({ userId });
+    router.refresh();
   }
 
   if (error) return <p>something went wront</p>;

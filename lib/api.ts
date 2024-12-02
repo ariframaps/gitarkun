@@ -9,31 +9,14 @@ import {
   ProductType,
 } from "./types";
 import { AddCartPayload } from "@/app/products/[name]/page";
+import { AddOrderPayload } from "@/app/checkout/page";
+import { RemoveFromCartPayload } from "@/components/CartCard";
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
 export async function fetchLatestProducts(): Promise<ProductType[]> {
   return await fetch(`${SERVER_URL}/product/latest`).then((res) => res.json());
 }
-
-// export async function fetchAllProducts({
-//   pageParam,
-// }: {
-//   pageParam: number;
-// }): Promise<InfinitePageType> {
-//   const FETCH_LIMIT = 9;
-//   const response = await fetch(`${SERVER_URL}/product`);
-//   let data = await response.json();
-
-//   return {
-//     data: data,
-//     currentPage: pageParam,
-//     nextPage:
-//       pageParam + FETCH_LIMIT < data.totalItems
-//         ? pageParam + FETCH_LIMIT
-//         : null,
-//   };
-// }
 
 export async function fetchAllProducts(): Promise<ProductType[]> {
   return await fetch(`${SERVER_URL}/product`).then((res) => res.json());
@@ -78,6 +61,24 @@ export async function addCart({ userId, cartItem }: AddCartPayload): Promise<{
     return res.json();
   });
 }
+export async function removeProductFromCart({
+  userId,
+  productId,
+  price,
+}: RemoveFromCartPayload): Promise<{
+  result: string;
+}> {
+  console.log(userId, productId, price, "ini delete cart di api");
+  return await fetch(
+    `${SERVER_URL}/cart?userId=${userId}&productId=${productId}&price=${price}`,
+    {
+      method: "DELETE",
+    }
+  ).then((res) => {
+    console.log(res.json(), "maiwmiaw");
+    return res.json();
+  });
+}
 
 export async function addProduct(product: ProductType): Promise<{
   result: ProductType;
@@ -91,9 +92,11 @@ export async function addProduct(product: ProductType): Promise<{
   }).then((res) => res.json());
 }
 
-export async function addOrder(userId: string | undefined | null): Promise<{
-  result: ProductType;
-}> {
+export async function addOrder({
+  userId,
+}: AddOrderPayload): Promise<{ result: ProductType }> {
+  console.log(userId, "ini user id wakt uadd order di api");
+
   return await fetch(`${SERVER_URL}/order/${userId}`, {
     method: "POST",
     headers: {

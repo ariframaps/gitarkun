@@ -41,9 +41,9 @@ export type CartType = {
 };
 
 export type CartProductInfo = {
-  productId: string | undefined;
-  name: string | undefined;
   image: string | undefined;
+  name: string | undefined;
+  productId: string | undefined;
   price: number | undefined;
 };
 
