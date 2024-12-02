@@ -80,9 +80,11 @@ export async function removeProductFromCart({
   });
 }
 
-export async function addProduct(product: ProductType): Promise<{
-  result: ProductType;
-}> {
+export async function addProduct({
+  product,
+}: {
+  product: ProductType;
+}): Promise<ProductType> {
   return await fetch(`${SERVER_URL}/product/my`, {
     method: "POST",
     headers: {
@@ -105,9 +107,9 @@ export async function addOrder({
   }).then((res) => res.json());
 }
 
-export async function getMyProduct(userId: string | undefined | null): Promise<{
-  products: ProductType[];
-}> {
+export async function getMyProduct(
+  userId: string | undefined | null
+): Promise<ProductType[]> {
   return await fetch(`${SERVER_URL}/product/my/${userId}`).then((res) =>
     res.json()
   );
@@ -115,9 +117,7 @@ export async function getMyProduct(userId: string | undefined | null): Promise<{
 
 export async function fetchAnalytics(
   userId: string | undefined | null
-): Promise<{
-  analysis: AnalyticsType;
-}> {
+): Promise<AnalyticsType> {
   return await fetch(`${SERVER_URL}/product/my/${userId}`).then((res) =>
     res.json()
   );
@@ -125,15 +125,14 @@ export async function fetchAnalytics(
 
 export async function fetchPurchasedProducts(
   userId: string | undefined | null
-): Promise<{
-  purchasedProducts:
-    | {
-        name: string;
-        image: string;
-        category: string;
-        link: string;
-        isDeleted: boolean;
-      }[];
-}> {
+): Promise<
+  {
+    name: string;
+    image: string;
+    category: string;
+    link: string;
+    isDeleted: boolean;
+  }[]
+> {
   return await fetch(`${SERVER_URL}/order/${userId}`).then((res) => res.json());
 }

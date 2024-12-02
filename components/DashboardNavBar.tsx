@@ -9,9 +9,12 @@ const dashboarNavLinks: NavLinkType[] = [
 
 function DashboardNavBar() {
   return (
-    <div className="flex gap-5">
+    <div className="flex gap-2">
       {dashboarNavLinks.map((link) => (
-        <Link href={link.href} key={link.name}>
+        <Link
+          href={link.href}
+          key={link.name}
+          className="border border-1 border-black rounded-sm px-3">
           {link.name}
         </Link>
       ))}

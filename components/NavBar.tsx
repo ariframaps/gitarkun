@@ -4,7 +4,7 @@ import { useShowCart } from "@/provider/context/ShowCartContext";
 import { NavLinkType } from "@/lib/types";
 import { SignedIn, UserButton, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useCart } from "@/provider/context/CartContext";
 import {
@@ -19,6 +19,11 @@ const NavBar = () => {
   const { showCart, setShowCart } = useShowCart();
   const [showNav, setShowNav] = useState(false);
   const router = useRouter();
+  const pathName = usePathname();
+
+  const activeNavClass = `block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500`;
+  const inActiveNavClass =
+    "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700";
 
   const { isSignedIn } = useAuth();
 
@@ -75,7 +80,7 @@ const NavBar = () => {
             <li>
               <Link
                 href="/"
-                className={`block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500`}
+                className={pathName === "/" ? activeNavClass : inActiveNavClass}
                 aria-current="page">
                 Home
               </Link>
@@ -83,7 +88,11 @@ const NavBar = () => {
             <li>
               <Link
                 href="/products"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                className={
+                  pathName.includes("/products")
+                    ? activeNavClass
+                    : inActiveNavClass
+                }>
                 Explore Tabs
               </Link>
             </li>

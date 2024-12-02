@@ -12,25 +12,22 @@ const Analytics = () => {
     queryKey: ["analytics"],
     queryFn: () => fetchAnalytics(userId),
   });
-
-  if (error) return <p>analytics something went worn g</p>;
-  if (isLoading) return <p>analytics Loading...</p>;
-  if (!data?.data) return <p>no product sold</p>;
-
   console.log(data);
 
   return (
-    <div>
+    <div className="flex flex-col gap-10">
       <div>
-        <span>Analytics</span>
+        <span className="font-semibold text-lg">Analytics</span>
         <div>
-          <p>Total of product sold: {data.data.totalSales}</p>
-          <p>Total revenue: Rp {data.data.totalRevenue}</p>
+          <p>Total of product sold: {data?.totalSales}</p>
+          <p>Total revenue: Rp {data?.totalRevenue}</p>
         </div>
       </div>
       <ul>
-        {data.data &&
-          data.data.productStats.map((product) => (
+        {error && <p>something went wrong when fetching analytics</p>}
+        {isLoading && <p>Loading analytics...</p>}
+        {Array.isArray(data?.productStats) &&
+          data.productStats.map((product) => (
             <ProductSoldCard product={product} key={product.product._id} />
           ))}
       </ul>

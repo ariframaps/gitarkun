@@ -2,23 +2,39 @@
 
 import { addProductSchema, AddProductType } from "@/models/AddProductForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CldUploadWidget, CloudinaryUploadWidgetInfo } from "next-cloudinary";
 import { useAuth } from "@clerk/nextjs";
 import { addProduct } from "@/lib/api";
+import axios from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ProductType } from "@/lib/types";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { userId } = useAuth();
 
-  const [uploadResult, setUploadResult] = useState<string | undefined>();
   const [formData, setFormData] = useState<AddProductType>();
+  const imageRef = useRef<any>(null);
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const { mutate } = useMutation({
+    mutationFn: addProduct,
+    onSuccess: (addedProduct) => {
+      queryClient.setQueryData(["my-product"], (oldProduct: ProductType[]) => [
+        ...oldProduct,
+        addedProduct,
+      ]);
+    },
+  });
 
   useEffect(() => {
-    if (uploadResult && formData) {
+    if (formData) {
       handleAddProduct();
     }
-  }, [uploadResult, formData]);
+  }, [formData]);
 
   const {
     register,
@@ -29,21 +45,36 @@ const page = () => {
   });
 
   async function handleAddProduct() {
-    console.log(uploadResult, "uploadResult");
+    console.log(imageRef.current?.files[0], "image");
     console.log(formData, "formData");
 
-    let product;
-    if (uploadResult && formData) {
-      product = {
-        ...formData,
-        image: uploadResult,
-        sellerId: userId,
-        isDeleted: false,
-      };
+    // imageRef saat saya console.log otu hasilnya adalah "C:\fakepath\pencil.png "
+    const newImageFormData = new FormData();
+    newImageFormData.append("image", imageRef.current?.files[0]);
 
-      const response = await addProduct(product);
-      console.log(response);
-    }
+    await axios
+      .post(
+        "https://api.imgbb.com/1/upload?key=6585372aa8dbf604c859353940b55919",
+        newImageFormData
+      )
+      .then((res) => {
+        const imageUrl = res.data.data.display_url;
+
+        if (imageUrl && formData) {
+          const newProduct = {
+            ...formData,
+            image: imageUrl,
+            sellerId: userId,
+            isDeleted: false,
+          };
+
+          mutate({ product: newProduct });
+          router.push("/dashboard/my-product");
+        }
+      })
+      .catch(() => {
+        return;
+      });
   }
 
   if (isLoading) return <p>Loading...</p>;
@@ -92,28 +123,10 @@ const page = () => {
           <input type="text" id="link" {...register("link")} />
           <span className="text-red-500 text-sm">{errors.link?.message}</span>
         </div>
-        <CldUploadWidget
-          uploadPreset="next_gitarkun_webapp"
-          onSuccess={({ event, info }) => {
-            if (event === "success" && info && typeof info === "object") {
-              setUploadResult(info.public_id);
-            }
-          }}>
-          {({ open }) => {
-            return (
-              <button
-                onClick={() => {
-                  if (Object.keys(errors).length !== 0) {
-                    return;
-                  } else {
-                    return open();
-                  }
-                }}>
-                Next
-              </button>
-            );
-          }}
-        </CldUploadWidget>
+        <div>
+          <input ref={imageRef} type="file" name="image" />
+        </div>
+        <button type="submit">Add</button>
       </form>
     </section>
   );

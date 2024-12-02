@@ -14,17 +14,17 @@ const Purchased = () => {
     queryFn: () => fetchPurchasedProducts(userId),
   });
 
-  if (error) return <p>puchased product page error</p>;
-  if (isLoading) return <p>purchased product page loading.... </p>;
-
   console.log(data);
   return (
-    <section>
-      <h2>Purchased History</h2>
+    <section className="flex flex-col gap-10">
+      <h2 className="font-semibold text-lg">Purchased History</h2>
       <ul>
-        {data?.data?.map((product) => (
-          <PurchasedProductCard key={product.image} product={product} />
-        ))}
+        {error && <p>puchased product page error</p>}
+        {isLoading && <p>purchased product page loading.... </p>}
+        {Array.isArray(data) &&
+          data?.map((product) => (
+            <PurchasedProductCard key={product.image} product={product} />
+          ))}
       </ul>
     </section>
   );
