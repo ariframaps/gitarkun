@@ -34,9 +34,7 @@ export async function fetchLatestProducts(): Promise<ProductType[]> {
 //   };
 // }
 
-export async function fetchAllProducts(): Promise<{
-  products: ProductType[];
-}> {
+export async function fetchAllProducts(): Promise<ProductType[]> {
   return await fetch(`${SERVER_URL}/product`).then((res) => res.json());
 }
 
