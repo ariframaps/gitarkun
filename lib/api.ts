@@ -8,6 +8,7 @@ import {
   InfinitePageType,
   ProductType,
 } from "./types";
+import { AddCartPayload } from "@/app/products/[name]/page";
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
@@ -55,25 +56,27 @@ export async function deleteProduct({
   }).then((res) => res.json());
 }
 
-export async function fetchCart(userId: string | null | undefined): Promise<{
-  cart: CartType;
-}> {
+export async function fetchCart(
+  userId: string | null | undefined
+): Promise<CartType> {
+  console.error(userId, "userIDDDDIDDID");
   return await fetch(`${SERVER_URL}/cart/${userId}`).then((res) => res.json());
 }
 
-export async function addCart(
-  userId: string | null | undefined,
-  product: CartProductInfo
-): Promise<{
+export async function addCart({ userId, cartItem }: AddCartPayload): Promise<{
   result: CartType;
 }> {
+  console.log(cartItem, "ini diapi");
   return await fetch(`${SERVER_URL}/cart`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ userId, product }),
-  }).then((res) => res.json());
+    body: JSON.stringify({ userId, product: cartItem }),
+  }).then((res) => {
+    console.log(res.json());
+    return res.json();
+  });
 }
 
 export async function addProduct(product: ProductType): Promise<{

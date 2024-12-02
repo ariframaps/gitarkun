@@ -1,8 +1,11 @@
 "use client";
 
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { CartReducer } from "../reducer/CartReducer";
 import { CartProductInfo } from "@/lib/types";
+import { useAuth } from "@clerk/nextjs";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCart } from "@/lib/api";
 
 type CartContextType = {
   cartList: CartProductInfo[];
@@ -24,8 +27,40 @@ const CartContext = createContext<CartContextType>(defaultValue);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(CartReducer, defaultValue);
+  const { isSignedIn, userId } = useAuth();
 
-  function addToCart(product: CartProductInfo) {
+  console.log(userId, "miawmiawmiaw");
+
+  // initial load from api and save it di cache
+  const {
+    data: cartData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["cart"],
+    queryFn: () => fetchCart(userId),
+    refetchOnMount: true,
+    enabled: !!userId,
+  });
+
+  // update cart list and total price when data is fetched
+  useEffect(() => {
+    if (cartData && !isLoading && !error) {
+      console.log(cartData, "ini di context");
+      const initialCartList = cartData.products || [];
+      const initialTotalPrice = cartData.total;
+
+      dispatch({
+        type: "SET_CART",
+        payload: {
+          cartList: initialCartList,
+          totalPrice: initialTotalPrice,
+        },
+      });
+    }
+  }, [cartData, isLoading, error]);
+
+  async function addToCart(product: CartProductInfo) {
     const newCartList = state.cartList.concat(product);
     const newTotalPrice = state.totalPrice + (product.price || 0);
 
@@ -38,7 +73,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     });
   }
 
-  function removeFromCart(product: CartProductInfo) {
+  async function removeFromCart(product: CartProductInfo) {
     const newCartList = state.cartList.filter(
       (cartItem) => cartItem.productId !== product.productId
     );
@@ -51,6 +86,15 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         totalPrice: newTotalPrice,
       },
     });
+
+    await fetch(
+      `${process.env.SERVER_URL}/cart?userId=${useAuth().userId}&productId=${
+        product.productId
+      }&price=${product.price}`,
+      {
+        method: "DELETE",
+      }
+    );
   }
 
   function clearCart() {

@@ -1,5 +1,8 @@
+"use client";
+
 import { CartProductInfo, ProductType } from "@/lib/types";
 import { useCart } from "@/provider/context/CartContext";
+import { useShowCart } from "@/provider/context/ShowCartContext";
 import { TrashIcon } from "lucide-react";
 import { CldImage } from "next-cloudinary";
 import Image from "next/image";
@@ -7,6 +10,8 @@ import Link from "next/link";
 import React from "react";
 
 const CartCard = ({ item }: { item: CartProductInfo }) => {
+  const { setShowCart } = useShowCart();
+
   const { removeFromCart } = useCart();
   const productUrlPath = item.name?.split(" ").join("_");
   return (
@@ -16,7 +21,9 @@ const CartCard = ({ item }: { item: CartProductInfo }) => {
       </div>
       <div>
         <Link href={`/products/${productUrlPath}`}>
-          <h5 className="mb-2 text-lg font-semibold text-black cursor-pointer">
+          <h5
+            onClick={() => setShowCart(false)}
+            className="mb-2 text-lg font-semibold text-black cursor-pointer">
             {item.name}
           </h5>
         </Link>

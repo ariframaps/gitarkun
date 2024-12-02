@@ -6,7 +6,7 @@ export type CartReducerState = {
 };
 
 export type CartReducerAction = {
-  type: "ADD_TO_CART" | "REMOVE_FROM_CART" | "CLEAR_CART";
+  type: "ADD_TO_CART" | "REMOVE_FROM_CART" | "CLEAR_CART" | "SET_CART";
   payload: {
     cartList: CartProductInfo[];
     totalPrice: number;
@@ -23,6 +23,7 @@ export const CartReducer = (
     case "ADD_TO_CART":
     case "REMOVE_FROM_CART":
     case "CLEAR_CART":
+    case "SET_CART":
       return {
         ...state,
         cartList: payload.cartList,

@@ -5,67 +5,91 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { InfinitePageType, ProductType } from "@/lib/types";
 import ProductCard from "@/components/ProductCard";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { InfiniteData } from "@tanstack/react-query";
 import { addCart, fetchSingleProductByName } from "@/lib/api";
 import { useAuth } from "@clerk/nextjs";
 import { CldImage } from "next-cloudinary";
 import { useCart } from "@/provider/context/CartContext";
 import { ChevronLeftIcon, ShoppingBagIcon } from "lucide-react";
+import axios from "axios";
 
+export type AddCartPayload = {
+  userId: string | undefined | null;
+  cartItem: {
+    productId: string | undefined;
+    name: string | undefined;
+    image: string | undefined;
+    price: number | undefined;
+  };
+};
 const page = () => {
   const { cartList, removeFromCart } = useCart();
   const router = useRouter();
   const queryClient = useQueryClient();
   const params = useParams() as { name: string };
+  const productName = params.name.split("_").join(" ");
   const { addToCart } = useCart();
   const [isInCart, setIsInCart] = useState(false); // is product in cart list check
+  const { isSignedIn, userId } = useAuth();
 
-  useEffect(() => {
-    const find = cartList.find(
-      (cartItem) => cartItem.name === params.name.split("_").join(" ")
-    );
-    setIsInCart(!!find);
-  }, [cartList]);
+  const { mutate } = useMutation({
+    mutationFn: addCart,
+  });
 
-  // get from cache if exists
   const cachedProducts = queryClient.getQueryData([
     "all-products",
   ]) as ProductType[];
 
-  const productName = params.name.split("_").join(" ");
+  const {
+    data: productData,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: [`${productName}`],
+    queryFn: () => fetchSingleProductByName(params.name),
+    enabled: !cachedProducts,
+  });
 
-  // check if cache is exist
-  let product: ProductType | undefined;
-  if (cachedProducts) {
-    // find item by product name
-    product = cachedProducts.find((item) => item?.name === productName);
-  } else {
-    const { data, error, isLoading } = useQuery({
-      queryKey: [`${productName}`],
-      queryFn: () => fetchSingleProductByName(params.name),
-    });
+  const product = cachedProducts
+    ? cachedProducts.find((item) => item?.name === productName)
+    : productData;
 
-    product = data;
-    if (isLoading) return <p>single product Loading...</p>;
-    if (error) return <p>single product Something weng wrong!</p>;
-  }
+  useEffect(() => {
+    const find = cartList.find((cartItem) => cartItem.name === productName);
+    setIsInCart(!!find);
+  }, [cartList, productName]);
 
-  async function handleAddToCart() {
+  if (isLoading) return <p>single product Loading...</p>;
+  if (error) return <p>single product Something weng wrong!</p>;
+
+  async function handleAddToCart(product: ProductType | undefined) {
+    if (!isSignedIn) {
+      if (isInCart) router.push("/sign-in");
+      return;
+    }
+
     const cartItem = {
       productId: product?._id,
       name: product?.name,
       image: product?.image,
       price: product?.price,
     };
-    if (product && !isInCart) {
-      addToCart(cartItem);
-      return;
-    }
-    if (isInCart) {
-      removeFromCart(cartItem);
-      return;
-    }
+
+    mutate({ userId, cartItem });
+    addToCart(cartItem);
+  }
+
+  function handleRemoveFromCart(product: ProductType | undefined) {
+    const cartItem = {
+      productId: product?._id,
+      name: product?.name,
+      image: product?.image,
+      price: product?.price,
+    };
+
+    removeFromCart(cartItem);
+    return;
   }
 
   return (
@@ -109,13 +133,23 @@ const page = () => {
               </div>
 
               <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                <button
-                  onClick={handleAddToCart}
-                  className="flex gap-3 items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                  role="button">
-                  <ShoppingBagIcon width={20} />
-                  {isInCart ? "Remove" : "Add to cart"}
-                </button>
+                {isInCart ? (
+                  <button
+                    onClick={() => handleRemoveFromCart(product)}
+                    className="flex gap-3 items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                    role="button">
+                    <ShoppingBagIcon width={20} />
+                    Remove from cart
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleAddToCart(product)}
+                    className="flex gap-3 items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                    role="button">
+                    <ShoppingBagIcon width={20} />
+                    Add to cart
+                  </button>
+                )}
               </div>
 
               <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
