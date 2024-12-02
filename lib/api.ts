@@ -11,9 +11,7 @@ import {
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
-export async function fetchLatestProducts(): Promise<{
-  LatestProducts: ProductType[];
-}> {
+export async function fetchLatestProducts(): Promise<ProductType[]> {
   return await fetch(`${SERVER_URL}/product/latest`).then((res) => res.json());
 }
 

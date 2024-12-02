@@ -2,32 +2,23 @@
 
 import { addProductSchema, AddProductType } from "@/models/AddProductForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  CldUploadButton,
-  CldUploadWidget,
-  CloudinaryUploadWidgetInfo,
-} from "next-cloudinary";
+import { CldUploadWidget, CloudinaryUploadWidgetInfo } from "next-cloudinary";
 import { useAuth } from "@clerk/nextjs";
 import { addProduct } from "@/lib/api";
-import { useRouter } from "next/navigation";
-// import {} from 'imgbb-uploader'
 
 const page = () => {
   const { userId } = useAuth();
-  const router = useRouter();
 
   const [uploadResult, setUploadResult] = useState<string | undefined>();
   const [formData, setFormData] = useState<AddProductType>();
 
-  const imageRef = useRef<HTMLInputElement | null>(null);
-
   useEffect(() => {
     if (uploadResult && formData) {
-      // handleAddProduct();
+      handleAddProduct();
     }
-  }, []);
+  }, [uploadResult, formData]);
 
   const {
     register,
@@ -37,35 +28,10 @@ const page = () => {
     resolver: zodResolver(addProductSchema),
   });
 
-  async function handleAddProduct(e: FormData) {
-    console.log(e, "formData");
-    if (imageRef.current && imageRef.current.files) {
-      const file = imageRef.current.files[0];
-      if (file) {
-        const formDataImg = new FormData();
-        formDataImg.append("image", file);
+  async function handleAddProduct() {
+    console.log(uploadResult, "uploadResult");
+    console.log(formData, "formData");
 
-        try {
-          // Mengirim request POST ke ImgBB API
-          const response = await fetch(
-            "https://api.imgbb.com/1/upload?key=6585372aa8dbf604c859353940b55919",
-            {
-              method: "POST",
-              body: JSON.stringify(formDataImg),
-            }
-          );
-          console.log(response);
-          // Mendapatkan URL gambar yang telah di-upload
-          //   if (response) {
-          //     // setUploadedImageURL(response.data.data.url);
-          //     console.log("URL Gambar yang di-upload:", response.data.data.url);
-          //   }
-        } catch (error) {
-          console.error("Error upload:", error);
-        }
-      }
-    }
-    return;
     let product;
     if (uploadResult && formData) {
       product = {
@@ -75,10 +41,8 @@ const page = () => {
         isDeleted: false,
       };
 
-      await addProduct(product).then(
-        (res) => console.log(res)
-        // router.push("/dashboard/my-products")
-      );
+      const response = await addProduct(product);
+      console.log(response);
     }
   }
 
@@ -86,7 +50,7 @@ const page = () => {
 
   return (
     <section className="m-16 bg-green-200">
-      <form>
+      <form onSubmit={handleSubmit((data) => setFormData(data))}>
         <div>
           <label htmlFor="name">Product Title</label>
           <input type="text" id="name" {...register("name")} />
@@ -123,27 +87,16 @@ const page = () => {
             {errors.description?.message}
           </span>
         </div>
-        <div id="imgBb">
+        <div>
           <label htmlFor="link">link</label>
           <input type="text" id="link" {...register("link")} />
           <span className="text-red-500 text-sm">{errors.link?.message}</span>
-        </div>
-        <div>
-          <input
-            ref={imageRef}
-            type="file"
-            name="image"
-            onChange={(e) => e.target.files}
-          />
-          <button type="submit">Upload</button>
         </div>
         <CldUploadWidget
           uploadPreset="next_gitarkun_webapp"
           onSuccess={({ event, info }) => {
             if (event === "success" && info && typeof info === "object") {
               setUploadResult(info.public_id);
-              console.log(info.public_id);
-              // return () => handleAddProduct();
             }
           }}>
           {({ open }) => {

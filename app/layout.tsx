@@ -34,7 +34,7 @@ export default function RootLayout({
               <ShowCartProvider>
                 <body>
                   <NavBar />
-                  <main>{children}</main>
+                  <main className="mt-20">{children}</main>
                   <CartModal />
                 </body>
               </ShowCartProvider>
