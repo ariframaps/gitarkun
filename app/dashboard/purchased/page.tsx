@@ -18,7 +18,7 @@ const Purchased = () => {
   return (
     <section className="flex flex-col gap-10">
       <h2 className="font-semibold text-lg">Purchased History</h2>
-      <ul>
+      <ul className="grid md:grid-cols-3 sm:grid-cols-2 gap-5 place-content-stretch place-items-stretch">
         {error && <p>puchased product page error</p>}
         {isLoading && <p>purchased product page loading.... </p>}
         {Array.isArray(data) &&
