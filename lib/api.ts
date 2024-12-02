@@ -38,9 +38,9 @@ export async function fetchAllProducts(): Promise<ProductType[]> {
   return await fetch(`${SERVER_URL}/product`).then((res) => res.json());
 }
 
-export async function fetchSingleProductByName(name: string): Promise<{
-  product: ProductType;
-}> {
+export async function fetchSingleProductByName(
+  name: string
+): Promise<ProductType> {
   return await fetch(`${SERVER_URL}/product/name/${name}`).then((res) =>
     res.json()
   );

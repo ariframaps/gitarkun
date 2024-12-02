@@ -85,7 +85,6 @@ const page = () => {
                 Search
               </button>
             </div>
-            {/* <div className="bg-yellow-200 flex flex-col gap-5"></div> */}
           </form>
         </div>
       </div>
@@ -106,27 +105,3 @@ const page = () => {
 };
 
 export default page;
-
-// {data &&
-//   data.pages.map((page) => (
-//     <ul
-//       key={page.currentPage}
-//       className="bg-green-200 grid grid-cols-3 gap-5">
-//       {/* {page.data.data?.map((product) => (
-//           <ProductCard product={product} key={product._id} />
-//         ))} */}
-//       {page.data.data
-//         ?.filter((product) =>
-//           searchTerm
-//             ? product.name
-//                 .toLowerCase()
-//                 .includes(searchTerm.toLowerCase())
-//             : true
-//         )
-//         .map((product) => (
-//           <ProductCard product={product} key={product._id} />
-//         )) || <p>No products found</p>}
-//     </ul>
-//   ))}
-
-// <div ref={ref}>{isFetchingNextPage && "Loading More Tabs...."}</div>
