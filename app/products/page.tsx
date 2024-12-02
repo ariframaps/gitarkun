@@ -44,11 +44,11 @@ const page = () => {
             product.name.toLowerCase().includes(searchTerm.toLowerCase())
           );
           setFilteredData(filtered);
-          initialProductsList(filtered); // Simpan data hasil filter ke context
+          initialProductsList(filtered); // simpan data hasil filter ke context
         }
-      } else if (data?.data) {
-        setFilteredData(data.data);
-        initialProductsList(data.data); // Simpan semua data jika tidak ada pencarian
+      } else if (Array.isArray(data?.products)) {
+        setFilteredData(data.products);
+        initialProductsList(data.products); // simpan semua data jika tidak ada pencarian
       }
     }
 

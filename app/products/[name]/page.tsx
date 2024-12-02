@@ -51,7 +51,7 @@ const page = () => {
 
     if (error) return <p>single product Something weng wrong!</p>;
     if (isLoading) return <p>single product Loading...</p>;
-    product = data?.data;
+    product = data?.product;
   }
 
   async function handleAddToCart() {

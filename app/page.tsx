@@ -13,9 +13,6 @@ const page = () => {
     queryFn: fetchLatestProducts,
   });
 
-  if (error) return <p>home Something went wrong</p>;
-  if (isLoading) return <p>home Loading...</p>;
-
   return (
     <>
       <section className="flex">
@@ -42,20 +39,26 @@ const page = () => {
           />
         </div>
       </section>
-      <section className="max-w-5xl mx-auto">
-        <div className="flex w-full justify-between">
-          <span>Featured</span>
-          <button>
-            <Link href={"/products"}>View All</Link>
-          </button>
-        </div>
-        <ul className="grid grid-cols-3 gap-5">
-          {data &&
-            data.data.map((product) => (
-              <ProductCard product={product} key={product._id} />
-            ))}
-        </ul>
-      </section>
+      {error && <p>home Something went wrong</p>}
+      {isLoading && <p>home Loading...</p>}
+      {!data?.LatestProducts && <p>Tidak ada data</p>}
+
+      {!error && !isLoading && data?.LatestProducts && (
+        <section className="max-w-5xl mx-auto">
+          <div className="flex w-full justify-between">
+            <span>Featured</span>
+            <button>
+              <Link href={"/products"}>View All</Link>
+            </button>
+          </div>
+          <ul className="grid grid-cols-3 gap-5">
+            {data &&
+              data.LatestProducts.map((product) => (
+                <ProductCard product={product} key={product._id} />
+              ))}
+          </ul>
+        </section>
+      )}
     </>
   );
 };

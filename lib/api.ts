@@ -1,5 +1,6 @@
 "use server";
 
+import { UpdateProductPayload } from "@/components/MyProductCard";
 import {
   AnalyticsType,
   CartProductInfo,
@@ -11,8 +12,7 @@ import {
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
 export async function fetchLatestProducts(): Promise<{
-  message: string;
-  data: ProductType[];
+  LatestProducts: ProductType[];
 }> {
   return await fetch(`${SERVER_URL}/product/latest`).then((res) => res.json());
 }
@@ -37,24 +37,30 @@ export async function fetchLatestProducts(): Promise<{
 // }
 
 export async function fetchAllProducts(): Promise<{
-  message: string;
-  data?: ProductType[];
+  products: ProductType[];
 }> {
   return await fetch(`${SERVER_URL}/product`).then((res) => res.json());
 }
 
 export async function fetchSingleProductByName(name: string): Promise<{
-  message: string;
-  data?: ProductType;
+  product: ProductType;
 }> {
   return await fetch(`${SERVER_URL}/product/name/${name}`).then((res) =>
     res.json()
   );
 }
+export async function deleteProduct({
+  productId,
+}: UpdateProductPayload): Promise<{
+  result: ProductType;
+}> {
+  return await fetch(`${SERVER_URL}/product/my/${productId}`, {
+    method: "DELETE",
+  }).then((res) => res.json());
+}
 
 export async function fetchCart(userId: string | null | undefined): Promise<{
-  message: string;
-  data?: CartType;
+  cart: CartType;
 }> {
   return await fetch(`${SERVER_URL}/cart/${userId}`).then((res) => res.json());
 }
@@ -63,8 +69,7 @@ export async function addCart(
   userId: string | null | undefined,
   product: CartProductInfo
 ): Promise<{
-  message: string;
-  data?: CartType;
+  result: CartType;
 }> {
   return await fetch(`${SERVER_URL}/cart`, {
     method: "POST",
@@ -76,8 +81,7 @@ export async function addCart(
 }
 
 export async function addProduct(product: ProductType): Promise<{
-  message: string;
-  data?: ProductType;
+  result: ProductType;
 }> {
   return await fetch(`${SERVER_URL}/product/my`, {
     method: "POST",
@@ -89,8 +93,7 @@ export async function addProduct(product: ProductType): Promise<{
 }
 
 export async function addOrder(userId: string | undefined | null): Promise<{
-  message: string;
-  data?: ProductType;
+  result: ProductType;
 }> {
   return await fetch(`${SERVER_URL}/order/${userId}`, {
     method: "POST",
@@ -101,8 +104,7 @@ export async function addOrder(userId: string | undefined | null): Promise<{
 }
 
 export async function getMyProduct(userId: string | undefined | null): Promise<{
-  message: string;
-  data?: ProductType[];
+  products: ProductType[];
 }> {
   return await fetch(`${SERVER_URL}/product/my/${userId}`).then((res) =>
     res.json()
@@ -112,8 +114,7 @@ export async function getMyProduct(userId: string | undefined | null): Promise<{
 export async function fetchAnalytics(
   userId: string | undefined | null
 ): Promise<{
-  message: string;
-  data?: AnalyticsType;
+  analysis: AnalyticsType;
 }> {
   return await fetch(`${SERVER_URL}/product/my/${userId}`).then((res) =>
     res.json()
@@ -123,14 +124,14 @@ export async function fetchAnalytics(
 export async function fetchPurchasedProducts(
   userId: string | undefined | null
 ): Promise<{
-  message: string;
-  data?: {
-    name: string;
-    image: string;
-    category: string;
-    link: string;
-    isDeleted: boolean;
-  }[];
+  purchasedProducts:
+    | {
+        name: string;
+        image: string;
+        category: string;
+        link: string;
+        isDeleted: boolean;
+      }[];
 }> {
   return await fetch(`${SERVER_URL}/order/${userId}`).then((res) => res.json());
 }

@@ -1,11 +1,13 @@
 "use client";
 
+import MyProductCard from "@/components/MyProductCard";
 import ProductCard from "@/components/ProductCard";
 import { getMyProduct } from "@/lib/api";
+import { ProductType } from "@/lib/types";
 import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const page = () => {
   const { userId } = useAuth();
@@ -29,9 +31,9 @@ const page = () => {
         </button>
       </div>
       <ul className="grid grid-cols-3 gap-5">
-        {data &&
-          data?.data?.map((product) => (
-            <ProductCard product={product} key={product._id} />
+        {data?.products &&
+          data.products.map((product) => (
+            <MyProductCard product={product} key={product._id} />
           ))}
       </ul>
     </div>

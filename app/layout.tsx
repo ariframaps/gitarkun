@@ -21,6 +21,13 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+          <script
+            async
+            src="https://imgbb.com/upload.js"
+            data-sibling-selector="#imgBb"
+            data-sibling-position="after"></script>
+        </head>
         <ReactQueryProvider>
           <FilterProvider>
             <CartProvider>
