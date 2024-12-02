@@ -4,6 +4,7 @@ import { useShowCart } from "@/provider/context/ShowCartContext";
 import Link from "next/link";
 import CartCard from "./CartCard";
 import { useCart } from "@/provider/context/CartContext";
+import { CrossIcon, XIcon } from "lucide-react";
 
 const CartModal = () => {
   const { cartList, totalPrice } = useCart();
@@ -15,30 +16,41 @@ const CartModal = () => {
   if (!showCart) return null;
 
   return (
-    <div className="fixed inset-0 bg-white/60 flex justify-center items-center">
-      <div>
-        <button onClick={handleClose}>Close</button>
-        <div>
-          <h3>Cart (total)</h3>
-          <p>Your all cart items are here!</p>
-          <ul>
-            {cartList &&
-              cartList.map((item) => (
-                <CartCard key={item.name} item={item} useInCart={true} />
-              ))}
-          </ul>
-        </div>
-        <div>
-          <div className="flex justify-between">
-            <span>Total:</span>
-            <span>{totalPrice || 0}</span>
+    <>
+      <div className="flex overflow-y-auto overflow-x-hidden bg-gray-600/80 fixed inset-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div className="relative p-4 w-full max-w-2xl max-h-full">
+          <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            {/* <!-- Modal header --> */}
+            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                Cart
+              </h3>
+              <button
+                onClick={() => setShowCart(false)}
+                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                <XIcon />
+                <span className="sr-only">Close modal</span>
+              </button>
+            </div>
+
+            <ul className="flex flex-col justify-stretch">
+              {cartList &&
+                cartList.map((item) => (
+                  <CartCard key={item.name} item={item} />
+                ))}
+            </ul>
+
+            {/* <!-- Modal footer --> */}
+            <div className="flex gap-5 justify-between items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+              <span className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Checkout
+              </span>
+              <div>Total : {totalPrice}</div>
+            </div>
           </div>
-          <button onClick={handleClose}>
-            <Link href={"/checkout"}>Checkout</Link>
-          </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

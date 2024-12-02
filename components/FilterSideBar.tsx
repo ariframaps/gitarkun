@@ -21,8 +21,7 @@ const FilterSideBar = () => {
         id="sidebar-multi-level-sidebar"
         className={`fixed z-999 sm:absolute lg:top-64 w-64 md:h-max h-screen pb-10 transition-transform sm:translate-x-0 ${
           showFilter ? "" : "-translate-x-full"
-        }`}
-        aria-label="Sidebar">
+        }`}>
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li className="ms-3 flex flex-col gap-10">

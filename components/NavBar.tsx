@@ -16,18 +16,18 @@ import {
 
 const NavBar = () => {
   const { cartList } = useCart();
-  const { setShowCart } = useShowCart();
+  const { showCart, setShowCart } = useShowCart();
   const [showNav, setShowNav] = useState(false);
   const router = useRouter();
 
-  const { isSignedIn, sessionId, userId } = useAuth();
+  const { isSignedIn } = useAuth();
 
   function handleShowCart() {
     if (!isSignedIn) {
       router.push("/sign-in");
       return;
     }
-    setShowCart(true);
+    setShowCart(!showCart);
   }
 
   return (
@@ -91,31 +91,6 @@ const NavBar = () => {
         </div>
       </div>
     </nav>
-
-    // <div className="w-screen p-3 border-b-2">
-    //   <div className="flex justify-between">
-    //     <h1 className="flex">
-    //       <BookIcon />
-    //       <span>Gitar-Kun</span>
-    //     </h1>
-    //     <div className="flex gap-5">
-    //       {navLinks.map((navLink) => (
-    //         <Link href={navLink.href} key={navLink.name}>
-    //           {navLink.name}
-    //         </Link>
-    //       ))}
-    //     </div>
-    //     <div className="flex gap-5">
-    //       <button onClick={handleShowCart}>Cart: {cartList.length}</button>
-    //       <button>
-    //         <Link href={"/dashboard/my-products"}>Start Selling</Link>
-    //       </button>
-    //       <SignedIn>
-    //         <UserButton />
-    //       </SignedIn>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

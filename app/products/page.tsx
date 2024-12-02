@@ -2,15 +2,10 @@
 
 import ProductCard from "@/components/ProductCard";
 import { fetchAllProducts } from "@/lib/api";
-import {
-  InfiniteData,
-  useInfiniteQuery,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import React, { useEffect, useState } from "react";
-import { InfinitePageType, ProductType } from "@/lib/types";
+import { ProductType } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import FilterSideBar from "@/components/FilterSideBar";
 import { useFilter } from "@/provider/context/filterContext";
