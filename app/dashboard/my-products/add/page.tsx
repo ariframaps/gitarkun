@@ -4,7 +4,6 @@ import { addProductSchema, AddProductType } from "@/models/AddProductForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { CldUploadWidget, CloudinaryUploadWidgetInfo } from "next-cloudinary";
 import { useAuth } from "@clerk/nextjs";
 import { addProduct } from "@/lib/api";
 import axios from "axios";

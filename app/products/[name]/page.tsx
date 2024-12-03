@@ -22,7 +22,7 @@ export type AddCartPayload = {
     price: number | undefined;
   };
 };
-const page = () => {
+const Page = () => {
   const { cart, removeFromCart } = useCart();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -175,4 +175,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

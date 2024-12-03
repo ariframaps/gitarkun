@@ -8,13 +8,11 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchLatestProducts } from "@/lib/api";
 import heroImage from "@/assets/hero_mage.png";
 
-const page = () => {
+const Page = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["latest-products"],
     queryFn: fetchLatestProducts,
   });
-
-  console.log(data);
 
   return (
     <>
@@ -67,4 +65,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

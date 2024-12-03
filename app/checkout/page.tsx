@@ -1,19 +1,19 @@
 "use client";
 
 import CartCard from "@/components/CartCard";
-import { addOrder, fetchCart } from "@/lib/api";
+import { addOrder } from "@/lib/api";
 import { useCart } from "@/provider/context/CartContext";
 import { useAuth } from "@clerk/nextjs";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 export type AddOrderPayload = {
   userId: string | null | undefined;
 };
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
-  const { userId, isSignedIn } = useAuth();
+  const { userId } = useAuth();
   const { cart, clearCart } = useCart();
 
   const { mutate } = useMutation({
@@ -61,4 +61,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

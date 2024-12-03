@@ -10,14 +10,13 @@ import FilterSideBar from "@/components/FilterSideBar";
 import { useFilter } from "@/provider/context/filterContext";
 import { FileSearch2Icon } from "lucide-react";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get("search");
   const [searchVal, setSearchVal] = useState("");
   const queryClient = useQueryClient();
   const { productsList, initialProductsList } = useFilter();
-  const [filteredData, setFilteredData] = useState<ProductType[] | null>(null);
 
   const { data, error, isLoading, isSuccess } = useQuery({
     queryKey: ["all-products"],
@@ -35,11 +34,9 @@ const page = () => {
           const filtered: ProductType[] = cache.filter((product) =>
             product.name.toLowerCase().includes(searchTerm.toLowerCase())
           );
-          setFilteredData(filtered);
           initialProductsList(filtered); // simpan data hasil filter ke context
         }
       } else if (Array.isArray(data)) {
-        setFilteredData(data);
         initialProductsList(data); // simpan semua data jika tidak ada pencarian
       }
     }
@@ -98,4 +95,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

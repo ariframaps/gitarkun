@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import React from "react";
 
-const page = () => {
+const Page = () => {
   const { userId } = useAuth();
 
   const { data, error, isLoading } = useQuery({
@@ -41,4 +41,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
