@@ -1,16 +1,13 @@
 "use client";
 
 import { removeProductFromCart } from "@/lib/api";
-import { CartProductInfo, CartType, ProductType } from "@/lib/types";
+import { CartProductInfo } from "@/lib/types";
 import { useCart } from "@/provider/context/CartContext";
 import { useShowCart } from "@/provider/context/ShowCartContext";
 import { useAuth } from "@clerk/nextjs";
 import { useMutation } from "@tanstack/react-query";
 import { TrashIcon } from "lucide-react";
-import { CldImage } from "next-cloudinary";
-import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 export type RemoveFromCartPayload = {
@@ -24,21 +21,18 @@ const CartCard = ({ item }: { item: CartProductInfo }) => {
   const { removeFromCart } = useCart();
   const { userId } = useAuth();
 
-  const { mutate, isSuccess } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: removeProductFromCart,
   });
 
   function handleRemove() {
-    console.log(item, "ini item yang di handleremove");
     const cartItem = {
       name: item.name,
       image: item.image,
       price: item.price,
     };
     if (userId) {
-      console.log(cartItem, "ini cart Item");
       mutate({ userId, productId: item.product, price: item.price });
-      console.log(isSuccess, "mutate isSuccess");
       removeFromCart({ ...cartItem, product: item.product });
     }
   }

@@ -4,12 +4,11 @@ import { useShowCart } from "@/provider/context/ShowCartContext";
 import Link from "next/link";
 import CartCard from "./CartCard";
 import { useCart } from "@/provider/context/CartContext";
-import { CrossIcon, XIcon } from "lucide-react";
+import { XIcon } from "lucide-react";
 
 const CartModal = () => {
   const { cart, totalPrice } = useCart();
   const { showCart, setShowCart } = useShowCart();
-  console.log(cart);
   if (!showCart) return null;
 
   return (

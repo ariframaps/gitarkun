@@ -11,7 +11,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ProductType } from "@/lib/types";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const { userId } = useAuth();
 
   const [formData, setFormData] = useState<AddProductType>();
@@ -193,4 +193,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

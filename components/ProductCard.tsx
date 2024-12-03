@@ -1,19 +1,9 @@
-"use client";
-
 import { ProductType } from "@/lib/types";
-import {
-  BookIcon,
-  BookTextIcon,
-  ChevronsLeftRight,
-  StarIcon,
-} from "lucide-react";
-import { CldImage } from "next-cloudinary";
+import { BookIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 const ProductCard = ({ product }: { product: ProductType }) => {
-  const router = useRouter();
   const productUrlPath = product.name.split(" ").join("_");
 
   return (

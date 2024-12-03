@@ -1,18 +1,12 @@
 "use client";
 
 import { useShowCart } from "@/provider/context/ShowCartContext";
-import { NavLinkType } from "@/lib/types";
 import { SignedIn, UserButton, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useCart } from "@/provider/context/CartContext";
-import {
-  BookIcon,
-  CarFrontIcon,
-  MenuIcon,
-  ShoppingBagIcon,
-} from "lucide-react";
+import { BookIcon, MenuIcon, ShoppingBagIcon } from "lucide-react";
 
 const NavBar = () => {
   const { cart } = useCart();

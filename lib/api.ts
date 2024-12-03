@@ -1,13 +1,7 @@
 "use server";
 
 import { UpdateProductPayload } from "@/components/MyProductCard";
-import {
-  AnalyticsType,
-  CartProductInfo,
-  CartType,
-  InfinitePageType,
-  ProductType,
-} from "./types";
+import { AnalyticsType, CartType, ProductType } from "./types";
 import { AddCartPayload } from "@/app/products/[name]/page";
 import { AddOrderPayload } from "@/app/checkout/page";
 import { RemoveFromCartPayload } from "@/components/CartCard";
