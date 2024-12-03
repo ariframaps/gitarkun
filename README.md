@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **Dokumentasi Website E-Commerce Notasi/Tablature Gitar**
 
-## Getting Started
+Selamat datang di dokumentasi untuk **Website E-Commerce Notasi/Tablature Gitar**. Website ini dirancang khusus untuk membantu musisi menjual dan membeli tablature/aransemen gitar seperti fingerstyle atau gitar klasik dalam format PDF. Berikut adalah daftar fitur fitur dari website.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## **Fitur Website**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **1. Halaman Utama (Homepage)**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Produk Terbaru**
+  - Menampilkan hingga 9 produk terbaru.
+  - Menggunakan carousel atau grid layout untuk tampilan menarik.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+### **2. Eksplorasi (Explore)**
 
-To learn more about Next.js, take a look at the following resources:
+- **Pencarian Produk**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  - Kolom pencarian.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Filter & Urutkan**
 
-## Deploy on Vercel
+  - **Filter:**
+    - Tingkat Kesulitan: "Beginner," "Intermediate," "Advanced."
+  - **Urutkan:**
+    - Harga: Dari termurah ke termahal atau sebaliknya.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Daftar Produk**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+  - Menampilkan hasil pencarian, filter, dan urutan dalam bentuk grid.
+  - Setiap produk mencantumkan:
+    - Gambar, nama, harga, nama, dan link untuk melihat detail.
+
+- **Detail Produk**
+  - Menampilkan informasi produk:
+    - Gambar, judul, deskripsi, kategori, tingkat kesulitan, harga.
+    - Tombol **"Add to Cart."**
+    - **Produk Serupa:** Rekomendasi produk berdasarkan kategori.
+
+---
+
+### **3. Jual Produk (Start Selling)**
+
+- **Dashboard Analitik**
+
+  - Menampilkan data seperti:
+    - Total penjualan, produk terjual, dan total pendapatan.
+
+- **Produk yang Dibeli**
+
+  - Daftar produk yang telah dibeli oleh pengguna.
+  - Fitur:
+    - Tombol Link download dilindungi.
+
+- **Produk Anda**
+
+  - Daftar produk yang telah diunggah oleh penjual.
+  - Fitur:
+    - Tambah, edit, dan hapus produk.
+
+- **Tambah Produk**
+
+  - Form untuk menambahkan produk baru dengan input seperti:
+    - Judul, link gambar, deskripsi, harga, tingkat kesulitan, kategori, dan link PDF.
+
+- **Hapus Produk**
+  - Menghapus produk dari daftar penjual.
+
+---
+
+### **4. Keranjang Belanja (Cart)**
+
+- Menampilkan produk yang telah ditambahkan pengguna ke keranjang.
+- Fitur:
+  - Hapus produk dari keranjang (produk tidak bisa diduplikasi).
+  - Menampilkan total produk dan total harga.
+
+---
+
+### **5. Checkout**
+
+- Proses checkout meliputi:
+
+  - Simulasi checkout.
+  - Email konfirmasi berisi link download PDF setelah pembayaran berhasil.
+
+- **Catatan:** Integrasi payment gateway masih dalam tahap pengembangan.
+
+---
+
+### **6. Autentikasi (Authentication)**
+
+- **Registrasi & Login Pengguna**
+  - Menggunakan **Clerk** dengan opsi login melalui email/password atau media sosial.
+- **Akses Berdasarkan Role**
+  - **Pembeli:** Dapat membeli dan mendownload produk.
+  - **Penjual:** Dapat mengelola produk dan melihat analitik penjualan.
+
+---
+
+## **Teknologi yang Digunakan**
+
+- **Frontend:** React.js dengan Next.js (Hooks, State Management).
+- **Backend:** Node.js dan Express.js.
+- **Database:** MongoDB dengan Mongoose.
+- **Autentikasi:** Clerk untuk login dan role-based access.
+- **Email Service:** (dalam pengembangan).
+- **Payment Gateway:** (sedang dikembangkan).
+
+---
+
+## **Fitur yang Akan Dikembangkan**
+
+- Integrasi payment gateway.
+- Email konfirmasi
+
+---
