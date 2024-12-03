@@ -1,14 +1,14 @@
-import { CartProductInfo } from "@/lib/types";
+import { CartProductInfo, CartType } from "@/lib/types";
 
 export type CartReducerState = {
-  cartList: CartProductInfo[];
+  cart: CartType;
   totalPrice: number;
 };
 
 export type CartReducerAction = {
   type: "ADD_TO_CART" | "REMOVE_FROM_CART" | "CLEAR_CART" | "SET_CART";
   payload: {
-    cartList: CartProductInfo[];
+    cart: CartType;
     totalPrice: number;
   };
 };
@@ -26,7 +26,7 @@ export const CartReducer = (
     case "SET_CART":
       return {
         ...state,
-        cartList: payload.cartList,
+        cart: payload.cart,
         totalPrice: payload.totalPrice,
       };
     default:

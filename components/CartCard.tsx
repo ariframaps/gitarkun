@@ -19,35 +19,34 @@ export type RemoveFromCartPayload = {
   price: number | undefined;
 };
 
-const CartCard = ({ item }: { item: any }) => {
-  const router = useRouter();
+const CartCard = ({ item }: { item: CartProductInfo }) => {
   const { setShowCart } = useShowCart();
   const { removeFromCart } = useCart();
   const { userId } = useAuth();
-  console.log(item);
 
-  const { mutate } = useMutation({
+  const { mutate, isSuccess } = useMutation({
     mutationFn: removeProductFromCart,
   });
 
   function handleRemove() {
     console.log(item, "ini item yang di handleremove");
+    const cartItem = {
+      name: item.name,
+      image: item.image,
+      price: item.price,
+    };
     if (userId) {
-      const cartItem = {
-        productId: item.productId,
-        name: item.name,
-        image: item.image,
-        price: item.price,
-      };
-      mutate({ userId, productId: item.productId, price: item.price });
-      removeFromCart(cartItem);
+      console.log(cartItem, "ini cart Item");
+      mutate({ userId, productId: item.product, price: item.price });
+      console.log(isSuccess, "mutate isSuccess");
+      removeFromCart({ ...cartItem, product: item.product });
     }
   }
 
   const productUrlPath = item.name?.split(" ").join("_");
   return (
-    <li className="flex gap-3 items-center justify-between w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <div>
+    <li className="flex gap-2 items-center justify-between w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div className="hidden md:block">
         <img src={item.image || ""} width={100} height={100} />
       </div>
       <div>
@@ -64,9 +63,9 @@ const CartCard = ({ item }: { item: any }) => {
       </div>
       <button
         onClick={handleRemove}
-        className="inline-flex gap-3 items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+        className="inline-flex gap-3 items-center px-2 md:px-3 py-1 md:py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
         Remove
-        <TrashIcon width={15} />
+        <TrashIcon width={15} className="hidden md:inline" />
       </button>
     </li>
   );

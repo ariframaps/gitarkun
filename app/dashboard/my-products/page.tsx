@@ -1,13 +1,11 @@
 "use client";
 
 import MyProductCard from "@/components/MyProductCard";
-import ProductCard from "@/components/ProductCard";
 import { getMyProduct } from "@/lib/api";
-import { ProductType } from "@/lib/types";
 import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const page = () => {
   const { userId } = useAuth();
@@ -15,7 +13,10 @@ const page = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["my-product"],
     queryFn: () => getMyProduct(userId),
+    enabled: !!userId,
   });
+
+  console.log(data);
 
   return (
     <div className="flex flex-col gap-10">
@@ -25,13 +26,16 @@ const page = () => {
           <Link href={"/dashboard/my-products/add"}>+ Sell New Tab!</Link>
         </button>
       </div>
-      <ul className="grid grid-cols-3 gap-5">
+      <ul className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-5">
         {error && <p>something went wrong</p>}
         {isLoading && <p>Loading my products...</p>}
-        {Array.isArray(data) &&
-          data.map((product) => (
-            <MyProductCard product={product} key={product._id} />
-          ))}
+        {Array.isArray(data?.products) &&
+          data.products.map(
+            (product) =>
+              !product.isDeleted && (
+                <MyProductCard product={product} key={product._id} />
+              )
+          )}
       </ul>
     </div>
   );

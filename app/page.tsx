@@ -6,7 +6,7 @@ import Link from "next/link";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchLatestProducts } from "@/lib/api";
-import { SearchCodeIcon, SearchIcon } from "lucide-react";
+import heroImage from "@/assets/hero_mage.png";
 
 const page = () => {
   const { data, error, isLoading } = useQuery({
@@ -18,13 +18,13 @@ const page = () => {
 
   return (
     <>
-      <section className="bg-white dark:bg-gray-900">
+      <section className="dark:bg-gray-900 mt-16 py-16 bg-slate-100">
         <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
           <div className="mr-auto place-self-center lg:col-span-7">
             <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
               Best Guitar Tabs Store!
             </h1>
-            <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+            <p className="max-w-2xl mb-6 font-light text-gray-800 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
               You don't need to bother making it yourself from scratch. You can
               see it here and improvise yourself.
             </p>
@@ -40,10 +40,7 @@ const page = () => {
             </Link>
           </div>
           <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-            <img
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
-              alt="mockup"
-            />
+            <Image src={heroImage} alt="GitarKun" width={400} height={400} />
           </div>
         </div>
       </section>
@@ -55,8 +52,8 @@ const page = () => {
             <Link href={"/products"}>View All</Link>
           </button>
         </div>
-        {error && <p>home Something went wrong</p>}
-        {isLoading && <p>home Loading...</p>}
+        {error && <p>Something went wrong</p>}
+        {isLoading && <p>Loading...</p>}
         {!error && !isLoading && data && (
           <ul className="grid md:grid-cols-3 sm:grid-cols-2 gap-5 place-items-stretch">
             {data &&

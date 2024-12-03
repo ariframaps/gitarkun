@@ -2,6 +2,7 @@ import { deleteProduct } from "@/lib/api";
 import { ProductType } from "@/lib/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export type UpdateProductPayload = {
@@ -10,7 +11,7 @@ export type UpdateProductPayload = {
 
 const MyProductCard = ({ product }: { product: ProductType }) => {
   const queryClient = useQueryClient();
-  const handleEdit = () => {};
+  const router = useRouter();
 
   const { mutate } = useMutation({
     mutationFn: deleteProduct,
@@ -18,7 +19,7 @@ const MyProductCard = ({ product }: { product: ProductType }) => {
       queryClient.setQueryData(["my-product"], (oldProducts: ProductType[]) => {
         return oldProducts.map((product) =>
           product._id === deletedProduct.result._id
-            ? { ...product, isDeleted: true } // Update the price
+            ? { ...product, isDeleted: true } // update the price
             : product
         );
       });
@@ -26,12 +27,15 @@ const MyProductCard = ({ product }: { product: ProductType }) => {
   });
 
   const handleDelete = async () => {
-    if (typeof product._id !== "undefined") mutate({ productId: product._id });
+    if (typeof product._id !== "undefined") {
+      mutate({ productId: product._id });
+      router.prefetch("/dashboard/my-products");
+    }
   };
 
   return (
     <div className="flex">
-      <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div className="max-w-sm flex flex-col justify-between bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <Link href={`/products/${product.name.split(" ").join("_")}`}>
           <img
             className="rounded-t-lg"
@@ -39,13 +43,13 @@ const MyProductCard = ({ product }: { product: ProductType }) => {
             alt={product.name}
           />
         </Link>
-        <div className="p-5">
+        <div className="p-5 flex gap-5 flex-col">
           <Link href={`/products/${product.name.split(" ").join("_")}`}>
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
               {product.name}
             </h5>
           </Link>
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+          <p className="mb-3 font-normal text-2xl text-gray-700 dark:text-gray-400">
             {product.price}
           </p>
           <button

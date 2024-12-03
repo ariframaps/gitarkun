@@ -32,18 +32,18 @@ export type AnalyticsType = {
 };
 
 export type CartType = {
-  _id: string;
+  _id?: string;
   userId: string;
   products: CartProductInfo[];
   total: number;
-  cratedAt: Date;
-  __v: string;
+  cratedAt?: Date;
+  __v?: string;
 };
 
 export type CartProductInfo = {
   image: string | undefined;
   name: string | undefined;
-  productId: string | undefined;
+  product: string | undefined;
   price: number | undefined;
 };
 

@@ -2,13 +2,13 @@
 
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { CartReducer } from "../reducer/CartReducer";
-import { CartProductInfo } from "@/lib/types";
+import { CartProductInfo, CartType } from "@/lib/types";
 import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCart } from "@/lib/api";
 
 type CartContextType = {
-  cartList: CartProductInfo[];
+  cart: CartType;
   totalPrice: number;
   addToCart: (product: CartProductInfo) => void;
   removeFromCart: (product: CartProductInfo) => void;
@@ -16,7 +16,11 @@ type CartContextType = {
 };
 
 const defaultValue: CartContextType = {
-  cartList: [] as CartProductInfo[],
+  cart: {
+    total: 0,
+    userId: "",
+    products: [],
+  },
   totalPrice: 0 as number,
   addToCart: () => {},
   removeFromCart: () => {},
@@ -28,8 +32,6 @@ const CartContext = createContext<CartContextType>(defaultValue);
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(CartReducer, defaultValue);
   const { isSignedIn, userId } = useAuth();
-
-  console.log(userId, "miawmiawmiaw");
 
   // initial load from api and save it di cache
   const {
@@ -45,15 +47,15 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   // update cart list and total price when data is fetched
   useEffect(() => {
-    if (cartData && !isLoading && !error) {
-      console.log(cartData, "ini di context");
-      const initialCartList = cartData.products || [];
+    if (cartData?.products && !isLoading && !error) {
+      const initialCartList = cartData;
       const initialTotalPrice = cartData.total;
+      console.log(cartData, "ini initial");
 
       dispatch({
         type: "SET_CART",
         payload: {
-          cartList: initialCartList,
+          cart: initialCartList,
           totalPrice: initialTotalPrice,
         },
       });
@@ -61,29 +63,36 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   }, [cartData, isLoading, error]);
 
   async function addToCart(product: CartProductInfo) {
-    const newCartList = state.cartList.concat(product);
+    const newCartList = state.cart.products.concat(product);
     const newTotalPrice = state.totalPrice + (product.price || 0);
 
     dispatch({
       type: "ADD_TO_CART",
       payload: {
-        cartList: newCartList,
+        cart: { ...state.cart, products: newCartList },
         totalPrice: newTotalPrice,
       },
     });
   }
 
-  async function removeFromCart(product: CartProductInfo) {
-    const newCartList = state.cartList.filter(
-      (cartItem) => cartItem.productId !== product.productId
-    );
+  function removeFromCart(product: CartProductInfo) {
     console.log(product, "ini yang dikirm ke context");
+
+    // const indexToDelete = state.cart.products.findIndex(p => p.productId === product.productId);
+    // const newCartList = state.cart.products.splice(indexToDelete, 1);
+
+    const newCartList = state.cart.products.filter(
+      (cartItem) => cartItem.product !== product.product
+    );
+    console.log(product);
+    console.log(newCartList, " INI NEW CART DI REMOVE FROM CART");
+    console.log(state.cart, " INI CART DI REMOVE FROM CART");
     const newTotalPrice = state.totalPrice - (product.price || 0);
 
     dispatch({
-      type: "ADD_TO_CART",
+      type: "REMOVE_FROM_CART",
       payload: {
-        cartList: newCartList,
+        cart: { ...state.cart, products: newCartList },
         totalPrice: newTotalPrice,
       },
     });
@@ -93,14 +102,18 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     dispatch({
       type: "CLEAR_CART",
       payload: {
-        cartList: [],
+        cart: {
+          total: 0,
+          userId: "",
+          products: [],
+        },
         totalPrice: 0,
       },
     });
   }
 
   const value = {
-    cartList: state.cartList,
+    cart: state.cart,
     totalPrice: state.totalPrice,
     addToCart,
     removeFromCart,

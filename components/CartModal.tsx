@@ -7,12 +7,9 @@ import { useCart } from "@/provider/context/CartContext";
 import { CrossIcon, XIcon } from "lucide-react";
 
 const CartModal = () => {
-  const { cartList, totalPrice } = useCart();
+  const { cart, totalPrice } = useCart();
   const { showCart, setShowCart } = useShowCart();
-
-  function handleClose() {
-    setShowCart(false);
-  }
+  console.log(cart);
   if (!showCart) return null;
 
   return (
@@ -34,14 +31,14 @@ const CartModal = () => {
             </div>
 
             <ul className="flex flex-col justify-stretch">
-              {cartList &&
-                cartList.map((item) => (
+              {cart &&
+                cart.products.map((item) => (
                   <CartCard key={item.name} item={item} />
                 ))}
             </ul>
 
             {/* <!-- Modal footer --> */}
-            {cartList.length > 0 && (
+            {cart.products.length > 0 && (
               <div className="flex gap-5 justify-between items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <Link
                   onClick={() => setShowCart(false)}

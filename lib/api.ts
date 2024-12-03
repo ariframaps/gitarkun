@@ -109,7 +109,7 @@ export async function addOrder({
 
 export async function getMyProduct(
   userId: string | undefined | null
-): Promise<ProductType[]> {
+): Promise<{ products: ProductType[] }> {
   return await fetch(`${SERVER_URL}/product/my/${userId}`).then((res) =>
     res.json()
   );
@@ -118,9 +118,9 @@ export async function getMyProduct(
 export async function fetchAnalytics(
   userId: string | undefined | null
 ): Promise<AnalyticsType> {
-  return await fetch(`${SERVER_URL}/product/my/${userId}`).then((res) =>
-    res.json()
-  );
+  return await fetch(`${SERVER_URL}/analytics/${userId}`).then((res) => {
+    return res.json();
+  });
 }
 
 export async function fetchPurchasedProducts(

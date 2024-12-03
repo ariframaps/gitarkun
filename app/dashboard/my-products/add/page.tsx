@@ -69,7 +69,7 @@ const page = () => {
           };
 
           mutate({ product: newProduct });
-          router.push("/dashboard/my-product");
+          router.push("/dashboard/my-products");
         }
       })
       .catch(() => {
@@ -80,53 +80,118 @@ const page = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <section className="m-16 bg-green-200">
+    <section className="">
       <form onSubmit={handleSubmit((data) => setFormData(data))}>
-        <div>
-          <label htmlFor="name">Product Title</label>
-          <input type="text" id="name" {...register("name")} />
-          <span className="text-red-500 text-sm">{errors.name?.message}</span>
+        <div className="mb-6">
+          <label
+            htmlFor="name"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Song Name
+          </label>
+          <input
+            type="text"
+            {...register("name")}
+            id="name"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+            {errors.name?.message}
+          </p>
         </div>
-        <div>
-          <label htmlFor="price">Price</label>
+        <div className="mb-6">
+          <label
+            htmlFor="price"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Price
+          </label>
           <input
             type="number"
-            id="price"
             {...register("price", { valueAsNumber: true })}
+            id="name"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
-          <span className="text-red-500 text-sm">{errors.price?.message}</span>
+          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+            {errors.price?.message}
+          </p>
         </div>
-        <div>
-          <label htmlFor="category">Category</label>
-          <input type="text" id="category" {...register("category")} />
-          <span className="text-red-500 text-sm">
+        <div className="mb-6">
+          <label
+            htmlFor="category"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Category
+          </label>
+          <input
+            type="text"
+            {...register("category")}
+            id="category"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
             {errors.category?.message}
-          </span>
-          {/* dropdown fix */}
+          </p>
         </div>
-        <div>
-          <label htmlFor="difficulty">Difficulty</label>
-          <input type="text" id="difficulty" {...register("difficulty")} />
-          <span className="text-red-500 text-sm">
+        <div className="mb-6">
+          <label
+            htmlFor="difficulty"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Difficulty
+          </label>
+          <input
+            type="text"
+            {...register("difficulty")}
+            id="difficulty"
+            placeholder="Beginner | Intermediate | Advanced"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
             {errors.difficulty?.message}
-          </span>
+          </p>
         </div>
-        <div>
-          <label htmlFor="description">Description</label>
-          <input type="text" id="description" {...register("description")} />
-          <span className="text-red-500 text-sm">
+        <div className="mb-6">
+          <label
+            htmlFor="description"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Description
+          </label>
+          <input
+            type="text"
+            {...register("description")}
+            id="category"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
             {errors.description?.message}
-          </span>
+          </p>
+        </div>
+        <div className="mb-6">
+          <label
+            htmlFor="link"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            PDF Tab Link
+          </label>
+          <input
+            type="url"
+            {...register("link")}
+            id="category"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+            {errors.link?.message}
+          </p>
         </div>
         <div>
-          <label htmlFor="link">link</label>
-          <input type="text" id="link" {...register("link")} />
-          <span className="text-red-500 text-sm">{errors.link?.message}</span>
-        </div>
-        <div>
+          <label
+            htmlFor="image"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Image
+          </label>{" "}
           <input ref={imageRef} type="file" name="image" />
         </div>
-        <button type="submit">Add</button>
+        <button
+          type="submit"
+          className=" mt-7 text-white bg-blue-700 flex items-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-4 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Submit
+        </button>
       </form>
     </section>
   );
