@@ -20,13 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <script
-          async
-          src="https://imgbb.com/upload.js"
-          data-sibling-selector="#imgBb"
-          data-sibling-position="after"></script>
-      </head>
+      <head></head>
       <ClerkProvider>
         <ReactQueryProvider>
           <FilterProvider>

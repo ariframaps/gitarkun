@@ -1,10 +1,11 @@
 "use server";
 
 import { UpdateProductPayload } from "@/components/MyProductCard";
-import { AnalyticsType, CartType, ProductType } from "./types";
+import { AnalyticsType, CartProductInfo, CartType, ProductType } from "./types";
 import { AddCartPayload } from "@/app/products/[name]/page";
 import { AddOrderPayload } from "@/app/checkout/page";
 import { RemoveFromCartPayload } from "@/components/CartCard";
+import axios from "axios";
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
@@ -123,4 +124,34 @@ export async function fetchPurchasedProducts(
   }[]
 > {
   return await fetch(`${SERVER_URL}/order/${userId}`).then((res) => res.json());
+}
+
+export async function getTransactionToken({
+  gross_amount,
+  customer_details,
+  cart,
+}: {
+  gross_amount: number;
+  customer_details: { first_name: string; email: string; phone: string };
+  cart: CartProductInfo[];
+}): Promise<{ transactionToken: string }> {
+  const cart_items = cart.map((item) => ({
+    id: item.product,
+    name: item.name,
+    price: item.price,
+    quantity: 1,
+  }));
+
+  console.log({ gross_amount, customer_details, cart }, "ini di fetch");
+  return await fetch(`${SERVER_URL}/get-transaction-token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      gross_amount,
+      customer_details,
+      cart_items,
+    }),
+  }).then((res) => res.json());
 }
