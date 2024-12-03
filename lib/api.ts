@@ -105,9 +105,10 @@ export async function getMyProduct(
 export async function fetchAnalytics(
   userId: string | undefined | null
 ): Promise<AnalyticsType> {
-  return await fetch(`${SERVER_URL}/analytics/${userId}`).then((res) => {
-    return res.json();
-  });
+  console.log(userId, "fetch analytics");
+  return await fetch(`${SERVER_URL}/analytics/${userId}`).then((res) =>
+    res.json()
+  );
 }
 
 export async function fetchPurchasedProducts(

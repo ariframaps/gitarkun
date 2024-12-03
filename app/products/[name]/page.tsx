@@ -71,7 +71,7 @@ const Page = () => {
 
   async function handleAddToCart(product: ProductType | undefined) {
     if (!isSignedIn) {
-      if (isInCart) router.push("/sign-in");
+      router.push("/sign-in");
       return;
     }
 

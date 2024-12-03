@@ -13,8 +13,10 @@ const Analytics = () => {
     queryFn: () => fetchAnalytics(userId),
   });
 
+  console.log(error);
+
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10  max-w-screen-2xl">
       <div>
         <span className="font-semibold text-lg">Analytics</span>
         <div className="mt-5 p-5 border border-gray-400 rounded-sm text-lg">
