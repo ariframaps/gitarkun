@@ -80,11 +80,11 @@ const Page = () => {
         </div>
       </div>
       <div className="flex gap-5">
-        <div className="hidden sm:block flex-shrink-0 w-72"></div>
+        <div className="hidden sm:block flex-shrink-0 w-72 "></div>
         {error && <p>Something went wrong</p>}
         {isLoading && <p>Loading...</p>}
         {isSuccess && (
-          <ul className="flex-grow-0 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-7">
+          <ul className="flex-grow-0 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-7 w-full justify-items-stretch">
             {productsList.map((product) => (
               <ProductCard product={product} key={product._id} />
             ))}

@@ -7,7 +7,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
   const productUrlPath = product.name.split(" ").join("_");
 
   return (
-    <li className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-between">
+    <li className="sm:max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-between">
       <Link href={`/products/${productUrlPath}`}>
         <img
           className="rounded-t-lg w-full max-h-52"

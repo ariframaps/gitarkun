@@ -24,7 +24,7 @@ const Page = () => {
           <Link href={"/dashboard/my-products/add"}>+ Sell New Tab!</Link>
         </button>
       </div>
-      <ul className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-5">
+      <ul className="grid grid-cols-1 mx-auto sm:grid-cols-3 md:grid-cols-4 gap-5">
         {error && <p>something went wrong</p>}
         {isLoading && <p>Loading my products...</p>}
         {Array.isArray(data?.products) &&
