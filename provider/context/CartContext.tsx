@@ -50,7 +50,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     if (cartData?.products && !isLoading && !error) {
       const initialCartList = cartData;
       const initialTotalPrice = cartData.total;
-      console.log(cartData, "ini initial");
 
       dispatch({
         type: "SET_CART",
@@ -76,17 +75,12 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   function removeFromCart(product: CartProductInfo) {
-    console.log(product, "ini yang dikirm ke context");
-
     // const indexToDelete = state.cart.products.findIndex(p => p.productId === product.productId);
     // const newCartList = state.cart.products.splice(indexToDelete, 1);
 
     const newCartList = state.cart.products.filter(
       (cartItem) => cartItem.product !== product.product
     );
-    console.log(product);
-    console.log(newCartList, " INI NEW CART DI REMOVE FROM CART");
-    console.log(state.cart, " INI CART DI REMOVE FROM CART");
     const newTotalPrice = state.totalPrice - (product.price || 0);
 
     dispatch({

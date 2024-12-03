@@ -44,9 +44,6 @@ const page = () => {
   });
 
   async function handleAddProduct() {
-    console.log(imageRef.current?.files[0], "image");
-    console.log(formData, "formData");
-
     // imageRef saat saya console.log otu hasilnya adalah "C:\fakepath\pencil.png "
     const newImageFormData = new FormData();
     newImageFormData.append("image", imageRef.current?.files[0]);

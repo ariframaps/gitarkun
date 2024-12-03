@@ -42,14 +42,12 @@ export async function deleteProduct({
 export async function fetchCart(
   userId: string | null | undefined
 ): Promise<CartType> {
-  console.error(userId, "userIDDDDIDDID");
   return await fetch(`${SERVER_URL}/cart/${userId}`).then((res) => res.json());
 }
 
 export async function addCart({ userId, cartItem }: AddCartPayload): Promise<{
   result: CartType;
 }> {
-  console.log(cartItem, "ini diapi");
   return await fetch(`${SERVER_URL}/cart`, {
     method: "POST",
     headers: {
@@ -57,7 +55,6 @@ export async function addCart({ userId, cartItem }: AddCartPayload): Promise<{
     },
     body: JSON.stringify({ userId, product: cartItem }),
   }).then((res) => {
-    console.log(res.json());
     return res.json();
   });
 }
@@ -68,14 +65,12 @@ export async function removeProductFromCart({
 }: RemoveFromCartPayload): Promise<{
   result: string;
 }> {
-  console.log(userId, productId, price, "ini delete cart di api");
   return await fetch(
     `${SERVER_URL}/cart?userId=${userId}&productId=${productId}&price=${price}`,
     {
       method: "DELETE",
     }
   ).then((res) => {
-    console.log(res.json(), "maiwmiaw");
     return res.json();
   });
 }
@@ -97,8 +92,6 @@ export async function addProduct({
 export async function addOrder({
   userId,
 }: AddOrderPayload): Promise<{ result: ProductType }> {
-  console.log(userId, "ini user id wakt uadd order di api");
-
   return await fetch(`${SERVER_URL}/order/${userId}`, {
     method: "POST",
     headers: {

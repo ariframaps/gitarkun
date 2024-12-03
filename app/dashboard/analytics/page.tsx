@@ -12,7 +12,6 @@ const Analytics = () => {
     queryKey: ["analytics"],
     queryFn: () => fetchAnalytics(userId),
   });
-  console.log(data, "Analytics");
 
   return (
     <div className="flex flex-col gap-10">

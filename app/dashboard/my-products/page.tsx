@@ -16,8 +16,6 @@ const Page = () => {
     enabled: !!userId,
   });
 
-  console.log(data);
-
   return (
     <div className="flex flex-col gap-10">
       <div className="flex w-full justify-between">
