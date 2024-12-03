@@ -54,10 +54,11 @@ const Page = () => {
         {isLoading && <p>Loading...</p>}
         {!error && !isLoading && data && (
           <ul className="grid md:grid-cols-3 sm:grid-cols-2 gap-5 place-items-stretch">
-            {data &&
-              data.map((product) => (
-                <ProductCard product={product} key={product._id} />
-              ))}
+            {Array.isArray(data)
+              ? data.map((product) => (
+                  <ProductCard product={product} key={product._id} />
+                ))
+              : "No products found"}
           </ul>
         )}
       </section>

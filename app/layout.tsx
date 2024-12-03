@@ -19,15 +19,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <head>
-          <script
-            async
-            src="https://imgbb.com/upload.js"
-            data-sibling-selector="#imgBb"
-            data-sibling-position="after"></script>
-        </head>
+    <html lang="en">
+      <head>
+        <script
+          async
+          src="https://imgbb.com/upload.js"
+          data-sibling-selector="#imgBb"
+          data-sibling-position="after"></script>
+      </head>
+      <ClerkProvider>
         <ReactQueryProvider>
           <FilterProvider>
             <CartProvider>
@@ -41,7 +41,7 @@ export default function RootLayout({
             </CartProvider>
           </FilterProvider>
         </ReactQueryProvider>
-      </html>
-    </ClerkProvider>
+      </ClerkProvider>
+    </html>
   );
 }
