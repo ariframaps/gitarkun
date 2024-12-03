@@ -3,7 +3,7 @@
 import ProductCard from "@/components/ProductCard";
 import { fetchAllProducts } from "@/lib/api";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { ProductType } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import FilterSideBar from "@/components/FilterSideBar";
@@ -95,4 +95,10 @@ const Page = () => {
   );
 };
 
-export default Page;
+const ProductPageWithSuspense = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Page />
+  </Suspense>
+);
+
+export default ProductPageWithSuspense;
