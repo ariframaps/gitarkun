@@ -134,33 +134,39 @@ const Page = () => {
                 <p className="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
                   Rp. {product?.price}
                 </p>
-                <div className="flex items-center gap-2 mt-2 sm:mt-5">
+                <div className="flex flex-col gap-2 mt-2 sm:mt-10">
                   <p>
                     Difficulty:{" "}
                     <span className="font-bold">{product?.difficulty}</span>
                   </p>
+                  <p>
+                    Category:{" "}
+                    <span className="font-bold">{product?.category}</span>
+                  </p>
                 </div>
               </div>
 
-              <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                {isInCart ? (
-                  <button
-                    onClick={() => handleRemoveFromCart(product)}
-                    className="flex gap-3 items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-red-400 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                    role="button">
-                    <ShoppingBagIcon width={20} />
-                    Remove from cart
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => handleAddToCart(product)}
-                    className="flex gap-3 items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-blue-300 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                    role="button">
-                    <ShoppingBagIcon width={20} />
-                    Add to cart
-                  </button>
-                )}
-              </div>
+              {product?.sellerId !== userId && (
+                <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                  {isInCart ? (
+                    <button
+                      onClick={() => handleRemoveFromCart(product)}
+                      className="flex gap-3 items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-red-400 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      role="button">
+                      <ShoppingBagIcon width={20} />
+                      Remove from cart
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleAddToCart(product)}
+                      className="flex gap-3 items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-blue-300 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      role="button">
+                      <ShoppingBagIcon width={20} />
+                      Add to cart
+                    </button>
+                  )}
+                </div>
+              )}
 
               <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 

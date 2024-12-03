@@ -50,7 +50,7 @@ const MyProductCard = ({ product }: { product: ProductType }) => {
             </h5>
           </Link>
           <p className="mb-3 font-normal text-2xl text-gray-700 dark:text-gray-400">
-            {product.price}
+            Rp. {product.price}
           </p>
           <button
             onClick={handleDelete}

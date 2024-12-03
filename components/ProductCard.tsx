@@ -7,22 +7,20 @@ const ProductCard = ({ product }: { product: ProductType }) => {
   const productUrlPath = product.name.split(" ").join("_");
 
   return (
-    <li className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <li className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-between">
       <Link href={`/products/${productUrlPath}`}>
         <img
-          className="rounded-t-lg"
-          src="/docs/images/blog/image-1.jpg"
-          alt=""
+          className="rounded-t-lg w-full max-h-52"
+          src={product.image}
+          alt={product.name}
         />
+        <h5 className=" p-5 mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+          {product.name}
+        </h5>
       </Link>
-      <div className="p-5 flex flex-col justify-between h-full">
-        <Link href={`/products/${productUrlPath}`} className="mb-10">
-          <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-            {product.name}
-          </h5>
-        </Link>
+      <div className="p-5 flex flex-col justify-between ">
         <div>
-          <p className="mb-2 flex gap-3 font-semibold text-gray-700 dark:text-gray-400">
+          <p className="mb-2 flex gap-3 text-gray-700 dark:text-gray-400">
             <StarIcon width={15} />
             {product.difficulty}
           </p>
