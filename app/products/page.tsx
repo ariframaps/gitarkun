@@ -1,10 +1,10 @@
 "use client";
 
 import ProductCard from "@/components/ProductCard";
-import { fetchAllProducts } from "@/lib/api";
+import { fetchAllProducts } from "@/utils/api";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { Suspense, useEffect, useState } from "react";
-import { ProductType } from "@/lib/types";
+import { ProductType } from "@/types/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import FilterSideBar from "@/components/FilterSideBar";
 import { useFilter } from "@/provider/context/filterContext";

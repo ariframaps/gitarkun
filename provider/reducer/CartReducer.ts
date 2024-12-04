@@ -1,4 +1,4 @@
-import { CartProductInfo, CartType } from "@/lib/types";
+import { CartProductInfo, CartType } from "@/types/types";
 
 export type CartReducerState = {
   cart: CartType;

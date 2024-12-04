@@ -1,6 +1,6 @@
 "use client";
 
-import { addOrder, getTransactionToken } from "@/lib/api";
+import { addOrder, getTransactionToken } from "@/utils/api";
 import { useCart } from "@/provider/context/CartContext";
 import { useAuth } from "@clerk/nextjs";
 import { useMutation } from "@tanstack/react-query";
@@ -43,16 +43,12 @@ export default function PaymentForm() {
       email: email,
       phone: phone,
     };
-
-    console.log(cart, "ini cartny");
-    console.log(customer_details, "ini di client");
     await getTransactionToken({
       gross_amount: totalPrice,
       customer_details,
       cart: cart.products,
     }).then((res) => {
       setShowSnapToggle(!showSnapToggle);
-      console.log(res);
       window.snap.pay(res.transactionToken, {
         onSuccess: function () {
           mutate({ userId });

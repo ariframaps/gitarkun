@@ -2,10 +2,10 @@
 
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { CartReducer } from "../reducer/CartReducer";
-import { CartProductInfo, CartType } from "@/lib/types";
+import { CartProductInfo, CartType } from "@/types/types";
 import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
-import { fetchCart } from "@/lib/api";
+import { fetchCart } from "@/utils/api";
 
 type CartContextType = {
   cart: CartType;
@@ -31,7 +31,7 @@ const CartContext = createContext<CartContextType>(defaultValue);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(CartReducer, defaultValue);
-  const { isSignedIn, userId } = useAuth();
+  const { userId } = useAuth();
 
   // initial load from api and save it di cache
   const {
@@ -75,9 +75,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   function removeFromCart(product: CartProductInfo) {
-    // const indexToDelete = state.cart.products.findIndex(p => p.productId === product.productId);
-    // const newCartList = state.cart.products.splice(indexToDelete, 1);
-
     const newCartList = state.cart.products.filter(
       (cartItem) => cartItem.product !== product.product
     );

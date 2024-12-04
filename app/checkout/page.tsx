@@ -4,10 +4,6 @@ import CartCard from "@/components/CartCard";
 import PaymentForm from "@/components/PaymentForm";
 import { useCart } from "@/provider/context/CartContext";
 
-export type AddOrderPayload = {
-  userId: string | null | undefined;
-};
-
 const Page = () => {
   const { cart, totalPrice } = useCart();
 

@@ -1,4 +1,4 @@
-import { ProductType } from "@/lib/types";
+import { ProductType } from "@/types/types";
 import React from "react";
 
 const ProductSoldCard = ({

@@ -1,7 +1,7 @@
 "use client";
 
-import { removeProductFromCart } from "@/lib/api";
-import { CartProductInfo } from "@/lib/types";
+import { removeProductFromCart } from "@/utils/api";
+import { CartProductInfo } from "@/types/types";
 import { useCart } from "@/provider/context/CartContext";
 import { useShowCart } from "@/provider/context/ShowCartContext";
 import { useAuth } from "@clerk/nextjs";
@@ -9,12 +9,6 @@ import { useMutation } from "@tanstack/react-query";
 import { TrashIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-
-export type RemoveFromCartPayload = {
-  userId: string | undefined | null;
-  productId: string | undefined;
-  price: number | undefined;
-};
 
 const CartCard = ({ item }: { item: CartProductInfo }) => {
   const { setShowCart } = useShowCart();

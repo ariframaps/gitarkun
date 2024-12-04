@@ -1,10 +1,15 @@
 "use server";
 
 import { UpdateProductPayload } from "@/components/MyProductCard";
-import { AnalyticsType, CartProductInfo, CartType, ProductType } from "./types";
-import { AddCartPayload } from "@/app/products/[name]/page";
-import { AddOrderPayload } from "@/app/checkout/page";
-import { RemoveFromCartPayload } from "@/components/CartCard";
+import {
+  AnalyticsType,
+  CartProductInfo,
+  CartType,
+  ProductType,
+} from "../types/types";
+import { AddCartPayload } from "../types/types";
+import { AddOrderPayload } from "../types/types";
+import { RemoveFromCartPayload } from "../types/types";
 import axios from "axios";
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;

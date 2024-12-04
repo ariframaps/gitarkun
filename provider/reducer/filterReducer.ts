@@ -1,4 +1,4 @@
-import { ProductType } from "@/lib/types";
+import { ProductType } from "@/types/types";
 
 export type FilterReducerState = {
   productsList: ProductType[];

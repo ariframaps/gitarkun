@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useCart } from "@/provider/context/CartContext";
 import { BookIcon, MenuIcon, ShoppingBagIcon } from "lucide-react";
+import CartModal from "./CartModal";
 
 const NavBar = () => {
   const { cart } = useCart();
@@ -31,6 +32,8 @@ const NavBar = () => {
 
   return (
     <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+      {showCart && <CartModal />}
+
       <div className="max-w-screen-xl gap-y-4 flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           href="/"

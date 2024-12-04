@@ -1,4 +1,4 @@
-import { ProductType } from "@/lib/types";
+import { ProductType } from "@/types/types";
 import { BookIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -10,7 +10,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
     <li className="sm:max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-between">
       <Link href={`/products/${productUrlPath}`}>
         <img
-          className="rounded-t-lg w-full max-h-52"
+          className="object-cover rounded-t-lg w-full max-h-52"
           src={product.image}
           alt={product.name}
         />

@@ -57,3 +57,23 @@ export type NavLinkType = {
   name: string;
   href: string;
 };
+
+export type AddCartPayload = {
+  userId: string | undefined | null;
+  cartItem: {
+    product: string | undefined;
+    name: string | undefined;
+    image: string | undefined;
+    price: number | undefined;
+  };
+};
+
+export type AddOrderPayload = {
+  userId: string | null | undefined;
+};
+
+export type RemoveFromCartPayload = {
+  userId: string | undefined | null;
+  productId: string | undefined;
+  price: number | undefined;
+};

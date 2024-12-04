@@ -1,7 +1,7 @@
 "use client";
 
 import PurchasedProductCard from "@/components/PurchasedProductCard";
-import { fetchPurchasedProducts } from "@/lib/api";
+import { fetchPurchasedProducts } from "@/utils/api";
 import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";

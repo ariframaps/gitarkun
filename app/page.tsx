@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchLatestProducts } from "@/lib/api";
+import { fetchLatestProducts } from "@/utils/api";
 import heroImage from "@/assets/hero_mage.png";
 
 const Page = () => {

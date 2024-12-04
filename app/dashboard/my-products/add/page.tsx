@@ -5,20 +5,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "@clerk/nextjs";
-import { addProduct } from "@/lib/api";
+import { addProduct } from "@/utils/api";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ProductType } from "@/lib/types";
+import { ProductType } from "@/types/types";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
   const { userId } = useAuth();
-
   const [formData, setFormData] = useState<AddProductType>();
   const imageRef = useRef<any>(null);
   const queryClient = useQueryClient();
   const router = useRouter();
-
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isLoading },
+  } = useForm<AddProductType>({
+    resolver: zodResolver(addProductSchema),
+  });
   const { mutate } = useMutation({
     mutationFn: addProduct,
     onSuccess: (addedProduct) => {
@@ -35,16 +40,7 @@ const Page = () => {
     }
   }, [formData]);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isLoading },
-  } = useForm<AddProductType>({
-    resolver: zodResolver(addProductSchema),
-  });
-
   async function handleAddProduct() {
-    // imageRef saat saya console.log otu hasilnya adalah "C:\fakepath\pencil.png "
     const newImageFormData = new FormData();
     newImageFormData.append("image", imageRef.current?.files[0]);
 
@@ -286,6 +282,7 @@ const Page = () => {
         </div>
         <button
           type="submit"
+          disabled={isLoading}
           className=" mt-7 text-white bg-blue-700 flex items-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-4 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           Submit
         </button>

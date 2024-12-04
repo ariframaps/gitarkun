@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useReducer } from "react";
 import { filterReducer, FilterReducerState } from "../reducer/filterReducer";
-import { ProductType } from "@/lib/types";
+import { ProductType } from "@/types/types";
 
 type FilterContextType = {
   state: FilterReducerState;

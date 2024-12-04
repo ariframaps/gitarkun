@@ -1,7 +1,7 @@
 "use client";
 
 import ProductSoldCard from "@/components/ProductSoldCard";
-import { fetchAnalytics } from "@/lib/api";
+import { fetchAnalytics } from "@/utils/api";
 import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";

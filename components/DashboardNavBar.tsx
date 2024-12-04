@@ -1,6 +1,6 @@
 "use client";
 
-import { NavLinkType } from "@/lib/types";
+import { NavLinkType } from "@/types/types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

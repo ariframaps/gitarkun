@@ -1,7 +1,7 @@
 "use client";
 
 import MyProductCard from "@/components/MyProductCard";
-import { getMyProduct } from "@/lib/api";
+import { getMyProduct } from "@/utils/api";
 import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";

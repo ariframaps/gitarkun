@@ -11,6 +11,7 @@
     "@clerk/nextjs": "^6.5.1",
     "@hookform/resolvers": "^3.9.1",
     "@tanstack/react-query": "^5.62.0",
+    "@tanstack/react-query-devtools": "^5.62.2",
     "axios": "^1.7.8",
     "flowbite-react": "^0.10.2",
     "imgbb-uploader": "^1.5.1",

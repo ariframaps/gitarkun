@@ -1,5 +1,5 @@
-import { deleteProduct } from "@/lib/api";
-import { ProductType } from "@/lib/types";
+import { deleteProduct } from "@/utils/api";
+import { ProductType } from "@/types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
