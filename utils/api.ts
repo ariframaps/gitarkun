@@ -10,7 +10,6 @@ import {
 import { AddCartPayload } from "../types/types";
 import { AddOrderPayload } from "../types/types";
 import { RemoveFromCartPayload } from "../types/types";
-import axios from "axios";
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
@@ -119,15 +118,7 @@ export async function fetchAnalytics(
 
 export async function fetchPurchasedProducts(
   userId: string | undefined | null
-): Promise<
-  {
-    name: string;
-    image: string;
-    category: string;
-    link: string;
-    isDeleted: boolean;
-  }[]
-> {
+): Promise<ProductType[]> {
   return await fetch(`${SERVER_URL}/order/${userId}`).then((res) => res.json());
 }
 

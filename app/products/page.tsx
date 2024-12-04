@@ -34,7 +34,7 @@ const Page = () => {
           const filtered: ProductType[] = cache.filter((product) =>
             product.name.toLowerCase().includes(searchTerm.toLowerCase())
           );
-          initialProductsList(filtered); // simpan data hasil filter ke context
+          initialProductsList(filtered); // simpan data hasil filter ke initial cart
         }
       } else if (Array.isArray(data)) {
         initialProductsList(data); // simpan semua data jika tidak ada pencarian

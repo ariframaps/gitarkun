@@ -14,22 +14,27 @@ import { useCart } from "@/provider/context/CartContext";
 import { ChevronLeftIcon, ShoppingBagIcon } from "lucide-react";
 
 const Page = () => {
-  const { cart, removeFromCart } = useCart();
+  const { cart, removeFromCart, addToCart } = useCart();
   const router = useRouter();
   const queryClient = useQueryClient();
   const params = useParams() as { name: string };
   const productName = params.name.split("_").join(" ");
-  const { addToCart } = useCart();
   const [isInCart, setIsInCart] = useState(false); // is product in cart list check
-  const { isSignedIn, userId } = useAuth();
+  const { userId, isLoaded } = useAuth();
 
   const { mutate } = useMutation({
     mutationFn: addCart,
+    onSuccess: (response, variable) => {
+      addToCart(variable.cartItem);
+      setIsInCart(true);
+    },
   });
 
   const { mutate: andrewTate } = useMutation({
     mutationFn: removeProductFromCart,
-    onSuccess: () => {},
+    onSuccess: () => {
+      removeFromCart(cartItem);
+    },
   });
 
   const cachedProducts = queryClient.getQueryData([
@@ -50,6 +55,13 @@ const Page = () => {
     ? cachedProducts.find((item) => item?.name === productName)
     : productData;
 
+  const cartItem = {
+    product: product?._id,
+    name: product?.name,
+    image: product?.image,
+    price: product?.price,
+  };
+
   useEffect(() => {
     const find = cart.products.find(
       (cartItem) => cartItem.name === productName
@@ -60,40 +72,26 @@ const Page = () => {
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Something weng wrong!</p>;
 
-  async function handleAddToCart(product: ProductType | undefined) {
-    if (!isSignedIn) {
-      router.push("/sign-in");
-      return;
-    }
+  // async function handleAddToCart() {
+  //   if (!isSignedIn) {
+  //     router.push("/sign-in");
+  //     return;
+  //   }
 
-    const cartItem = {
-      product: product?._id,
-      name: product?.name,
-      image: product?.image,
-      price: product?.price,
-    };
+  //   mutate({ userId, cartItem });
+  //   addToCart(cartItem);
+  // }
 
-    mutate({ userId, cartItem });
-    addToCart(cartItem);
-  }
-
-  function handleRemoveFromCart(product: ProductType | undefined) {
-    const cartItem = {
-      product: product?._id,
-      name: product?.name,
-      image: product?.image,
-      price: product?.price,
-    };
-
-    andrewTate({
-      userId,
-      productId: cartItem.product,
-      price: cartItem.price,
-    });
-    removeFromCart(cartItem);
-    setIsInCart(false);
-    return;
-  }
+  // function handleRemoveFromCart() {
+  //   andrewTate({
+  //     userId,
+  //     productId: cartItem.product,
+  //     price: cartItem.price,
+  //   });
+  //   removeFromCart(cartItem);
+  //   setIsInCart(false);
+  //   return;
+  // }
 
   return (
     <>
@@ -138,7 +136,13 @@ const Page = () => {
                 <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
                   {isInCart ? (
                     <button
-                      onClick={() => handleRemoveFromCart(product)}
+                      onClick={() =>
+                        andrewTate({
+                          productId: cartItem.product,
+                          userId: userId,
+                          price: cartItem.price,
+                        })
+                      }
                       className="flex gap-3 items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-red-400 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       role="button">
                       <ShoppingBagIcon width={20} />
@@ -146,7 +150,10 @@ const Page = () => {
                     </button>
                   ) : (
                     <button
-                      onClick={() => handleAddToCart(product)}
+                      onClick={() => {
+                        if (!isLoaded) return router.push("/sign-in");
+                        mutate({ userId, cartItem });
+                      }}
                       className="flex gap-3 items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-blue-300 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       role="button">
                       <ShoppingBagIcon width={20} />

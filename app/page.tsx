@@ -12,6 +12,8 @@ const Page = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["latest-products"],
     queryFn: fetchLatestProducts,
+    refetchOnWindowFocus: false,
+    retry: 3,
   });
 
   return (

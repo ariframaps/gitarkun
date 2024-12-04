@@ -14,6 +14,8 @@ const Purchased = () => {
     queryFn: () => fetchPurchasedProducts(userId),
   });
 
+  console.log(data, "purchased");
+
   return (
     <section className="flex flex-col gap-10">
       <h2 className="font-semibold text-lg">Purchased History</h2>

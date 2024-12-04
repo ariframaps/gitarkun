@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
-import CartModal from "@/components/CartModal";
 import { ShowCartProvider } from "@/provider/context/ShowCartContext";
 import { ClerkProvider } from "@clerk/nextjs";
 import ReactQueryProvider from "@/provider/ReactQueryProvider";
@@ -21,20 +20,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head></head>
-      <ClerkProvider>
-        <ReactQueryProvider>
-          <FilterProvider>
-            <CartProvider>
-              <ShowCartProvider>
-                <body>
+      <body>
+        <ClerkProvider>
+          <ReactQueryProvider>
+            <FilterProvider>
+              <CartProvider>
+                <ShowCartProvider>
                   <NavBar />
                   <main>{children}</main>
-                </body>
-              </ShowCartProvider>
-            </CartProvider>
-          </FilterProvider>
-        </ReactQueryProvider>
-      </ClerkProvider>
+                </ShowCartProvider>
+              </CartProvider>
+            </FilterProvider>
+          </ReactQueryProvider>
+        </ClerkProvider>
+      </body>
     </html>
   );
 }
