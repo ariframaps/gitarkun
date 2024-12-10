@@ -26,8 +26,6 @@ const PurchasedProductCard = ({
           {product.name}
         </h5>
       </Link>
-      {/* <Link href={`/products/${product.name.split(" ").join("_")}`}>
-        </Link> */}
       <div className="p-5 flex flex-col justify-between">
         <button className="text-white bg-blue-700 flex items-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           <a href={product.link}>View Tab</a>

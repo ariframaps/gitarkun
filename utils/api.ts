@@ -119,7 +119,10 @@ export async function fetchAnalytics(
 export async function fetchPurchasedProducts(
   userId: string | undefined | null
 ): Promise<ProductType[]> {
-  return await fetch(`${SERVER_URL}/order/${userId}`).then((res) => res.json());
+  return await fetch(`${SERVER_URL}/order/${userId}`).then((res) => {
+    if (!res.ok) throw new Error("error fetching order");
+    return res.json();
+  });
 }
 
 export async function getTransactionToken({
