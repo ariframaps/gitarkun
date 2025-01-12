@@ -42,10 +42,12 @@ const CartModal = () => {
                 <Link
                   onClick={() => setShowCart(false)}
                   href={"/checkout"}
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  className=" bg-yellow-400 border-b-4 border-e-4 border-black hover:bg-yellow-500 text-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   Checkout
                 </Link>
-                <div>Total : Rp. {totalPrice}</div>
+                <div className="text-lg font-bold">
+                  Total : Rp. {totalPrice}
+                </div>
               </div>
             )}
           </div>

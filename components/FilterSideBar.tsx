@@ -12,7 +12,7 @@ const FilterSideBar = () => {
       <button
         onClick={() => setShowFilter(!showFilter)}
         type="button"
-        className="order-1 inline-flex items-center p-1 text-sm text-gray-500 rounded-lg sm:hidden focus:outline-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+        className="order-1 inline-flex items-center p-1 text-sm text-gray-500 sm:hidden focus:outline-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
         <span className="sr-only">Open sidebar</span>
         <FilterIcon />
       </button>
@@ -22,12 +22,12 @@ const FilterSideBar = () => {
         className={`fixed z-999 sm:absolute lg:top-64 w-64 md:h-max h-screen pb-10 transition-transform sm:translate-x-0 ${
           showFilter ? "" : "-translate-x-full"
         }`}>
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <div className="h-full px-3 py-4 overflow-y-auto order bg-white sm:bg-[#17813C] sm:text-white dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li className="ms-3 flex flex-col gap-10">
               <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <FilterIcon />
-                <span className="ms-3 text-xl">Filter & Sort</span>
+                <FilterIcon color="white" />
+                <span className="ms-3 text-xl text-white">Filter & Sort</span>
               </div>
               <div className="flex flex-col gap-2">
                 <p className="mb-2">Price</p>
@@ -97,7 +97,7 @@ const FilterSideBar = () => {
               </div>
               <button
                 onClick={() => clearDispatch()}
-                className="text-white bg-blue-700 flex items-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                className=" bg-yellow-400 text-black hover:bg-yellow-600 text-center flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 md:py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Clear
               </button>
             </li>

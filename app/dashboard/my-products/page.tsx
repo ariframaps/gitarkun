@@ -18,9 +18,9 @@ const Page = () => {
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex w-full justify-between">
+      <div className="flex w-full items-center justify-between">
         <span className="font-semibold text-lg">Your Tabs</span>
-        <button className="text-white bg-blue-700 flex items-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <button className=" flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 bg-yellow-400 border-b-4 border-e-4 border-black hover:bg-yellow-500 text-black">
           <Link href={"/dashboard/my-products/add"}>+ Sell New Tab!</Link>
         </button>
       </div>

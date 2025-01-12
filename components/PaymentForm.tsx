@@ -69,7 +69,7 @@ export default function PaymentForm() {
   return (
     <form
       onSubmit={(e) => handleCheckout(e)}
-      className="flex max-w-md flex-col gap-4 p-5">
+      className="flex flex-col gap-4 p-2 sm:p-5w-full mt-5">
       <div>
         <div className="mb-2 block">
           <Label htmlFor="phone_number" value="Your phone number" />

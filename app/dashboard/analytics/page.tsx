@@ -17,9 +17,15 @@ const Analytics = () => {
     <div className="flex flex-col gap-10  max-w-screen-2xl">
       <div>
         <span className="font-semibold text-lg">Analytics</span>
-        <div className="mt-5 p-5 border border-gray-400 rounded-sm text-lg">
+        <div className="mt-5 p-5 border border-gray-400 rounded-sm text-lg bg-yellow-400 ">
           <p>Total of product sold : {data?.totalSales}</p>
-          <p>Total revenue : Rp {data?.totalRevenue}</p>
+          <p>
+            Total revenue :
+            <span className="font-bold text-[#17813C]">
+              {" "}
+              Rp {data?.totalRevenue}
+            </span>
+          </p>
         </div>
       </div>
       <ul className="flex flex-col gap-5">

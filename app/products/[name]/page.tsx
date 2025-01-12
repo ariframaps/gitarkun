@@ -91,22 +91,22 @@ const Page = () => {
     <>
       <section className="flex flex-col items-end px-4 2xl:px-0 mt-14 sm:mt-20 py-8 bg-white md:py-16 antialiased max-w-xl lg:max-w-screen-xl mx-auto">
         <button
-          className="flex gap-3 mb-7 items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
+          className="border-b rounded-none border-black flex gap-3 mb-7 items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
           onClick={() => router.back()}>
           <ChevronLeftIcon width={20} />
           Back
         </button>
-        <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
-          <div className="shrink-0 mx-auto bg-slate-200 w-full">
+        <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-12">
+          <div className="shrink-0 mx-auto bg-slate-200 w-full rounded-lg shadow-lg border-b-4 border-e-4 border-neutral-600 overflow-hidden">
             <img className="w-full" src={product?.image} alt={product?.name} />
           </div>
 
-          <div className="mt-6 sm:mt-8 lg:mt-0">
+          <div className="mt-6 sm:mt-8 lg:mt-0 bg-slate-50 p-4 md:p-8 rounded-lg border">
             <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
               {product?.name}
             </h1>
             <div className="mt-4 sm:items-center sm:gap-4">
-              <p className="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
+              <p className="text-2xl text-yellow-600 font-extrabold sm:text-3xl dark:text-white">
                 Rp. {product?.price}
               </p>
               <div className="flex flex-col gap-2 mt-2 sm:mt-10">

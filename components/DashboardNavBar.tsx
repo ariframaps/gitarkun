@@ -14,13 +14,13 @@ function DashboardNavBar() {
   const pathName = usePathname();
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 sm:gap-5 pb-5 border-b border-neutral-400">
       {dashboarNavLinks.map((link) => (
         <Link
           href={link.href}
           key={link.name}
-          className={`border border-1 py-1 sm:py-2 border-black rounded-sm px-3 ${
-            pathName.includes(link.href) ? "bg-black text-white" : ""
+          className={`border border-b-4 border-e-4 border-1 py-1 sm:py-2 border-black rounded-sm px-3 ${
+            pathName.includes(link.href) ? "bg-[#17813C] text-white" : ""
           }`}>
           {link.name}
         </Link>
