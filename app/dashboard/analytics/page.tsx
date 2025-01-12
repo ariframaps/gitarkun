@@ -13,8 +13,6 @@ const Analytics = () => {
     queryFn: () => fetchAnalytics(userId),
   });
 
-  console.log(error);
-
   return (
     <div className="flex flex-col gap-10  max-w-screen-2xl">
       <div>

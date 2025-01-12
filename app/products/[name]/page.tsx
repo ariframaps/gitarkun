@@ -74,7 +74,6 @@ const Page = () => {
     const find = cart.products.find(
       (cartItem) => cartItem.name === productName
     );
-    console.log(purchasedProducts.data);
     if (purchasedProducts.data && Array.isArray(purchasedProducts.data)) {
       const findPurchasedProduct = purchasedProducts.data.find(
         (p) => p._id === product?._id

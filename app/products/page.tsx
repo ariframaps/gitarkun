@@ -8,7 +8,7 @@ import { ProductType } from "@/types/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import FilterSideBar from "@/components/FilterSideBar";
 import { useFilter } from "@/provider/context/filterContext";
-import { FileSearch2Icon } from "lucide-react";
+import { FileSearch2Icon, Loader2 } from "lucide-react";
 
 const Page = () => {
   const router = useRouter();
@@ -82,13 +82,27 @@ const Page = () => {
         </div>
         <div className="flex gap-5">
           <div className="hidden sm:block flex-shrink-0 w-72 "></div>
-          {error && <p>Something went wrong</p>}
-          {isLoading && <p>Loading...</p>}
+          {error && (
+            <div className="w-full h-32 flex items-center justify-center">
+              <p>Something went wrong</p>
+            </div>
+          )}
+          {isLoading && (
+            <div className="w-full h-32 flex items-center justify-center">
+              <Loader2 className="animate-spin" />
+            </div>
+          )}
           {isSuccess && (
             <ul className="flex-grow-0 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-7 w-full justify-items-stretch">
-              {productsList.map((product) => (
-                <ProductCard product={product} key={product._id} />
-              ))}
+              {productsList.length > 0 ? (
+                productsList.map((product) => (
+                  <ProductCard product={product} key={product._id} />
+                ))
+              ) : (
+                <div className="w-full h-32 flex items-center justify-center">
+                  <p>No product found</p>
+                </div>
+              )}
             </ul>
           )}
         </div>

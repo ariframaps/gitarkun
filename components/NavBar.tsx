@@ -16,9 +16,9 @@ const NavBar = () => {
   const router = useRouter();
   const pathName = usePathname();
 
-  const activeNavClass = `block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500`;
+  const activeNavClass = `block py-2 px-3 text-white bg-yellow-500 rounded md:bg-transparent md:text-yellow-500 md:p-0 md:dark:text-yellow-500`;
   const inActiveNavClass =
-    "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700";
+    "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700";
 
   const { isSignedIn } = useAuth();
 
@@ -38,8 +38,8 @@ const NavBar = () => {
         <Link
           href="/"
           className="flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
-          <BookIcon className="dark:text-white" width={20} />
-          <span className="self-center md:text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <BookIcon className="dark:text-white hidden sm:inline" width={20} />
+          <span className="self-center md:text-xl font-bold whitespace-nowrap dark:text-white text-white bg-black px-4 py-1 font-serif">
             Gitar-Kun
           </span>
         </Link>
@@ -47,14 +47,14 @@ const NavBar = () => {
           <button
             onClick={handleShowCart}
             type="button"
-            className="flex items-center sm:text-white sm:bg-blue-700 sm:hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1 md:p-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            className="sm:bg-yellow-400 sm:border-b-4 sm:border-e-4 border-black hover:bg-white hover:text-black text-black sm:text-white flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1 md:p-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <ShoppingBagIcon className="dark:text-white" width={20} /> :{" "}
             {cart.products.length || 0}
           </button>
           <Link
             href={"/dashboard/my-products"}
             type="button"
-            className="text-white bg-blue-700 flex items-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            className="sm:bg-red-600 sm:border-b-4 sm:border-e-4 border-black hover:bg-white hover:text-black text-red-800 sm:text-white flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Sell Yours!
           </Link>
           <SignedIn>

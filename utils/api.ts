@@ -110,7 +110,6 @@ export async function getMyProduct(
 export async function fetchAnalytics(
   userId: string | undefined | null
 ): Promise<AnalyticsType> {
-  console.log(userId, "fetch analytics");
   return await fetch(`${SERVER_URL}/analytics/${userId}`).then((res) =>
     res.json()
   );
@@ -141,7 +140,6 @@ export async function getTransactionToken({
     quantity: 1,
   }));
 
-  console.log({ gross_amount, customer_details, cart }, "ini di fetch");
   return await fetch(`${SERVER_URL}/get-transaction-token`, {
     method: "POST",
     headers: {

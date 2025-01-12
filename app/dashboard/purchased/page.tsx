@@ -14,8 +14,6 @@ const Purchased = () => {
     queryFn: () => fetchPurchasedProducts(userId),
   });
 
-  console.log(data, "purchased");
-
   return (
     <section className="flex flex-col gap-10">
       <h2 className="font-semibold text-lg">Purchased History</h2>
@@ -23,8 +21,8 @@ const Purchased = () => {
         {error && <p>puchased product page error</p>}
         {isLoading && <p>purchased product page loading.... </p>}
         {Array.isArray(data) &&
-          data?.map((product) => (
-            <PurchasedProductCard key={product.image} product={product} />
+          data?.map((product, index) => (
+            <PurchasedProductCard key={index} product={product} />
           ))}
       </ul>
     </section>

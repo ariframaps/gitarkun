@@ -34,14 +34,16 @@ const MyProductCard = ({ product }: { product: ProductType }) => {
   };
 
   return (
-    <div className="flex">
-      <div className="max-w-sm flex flex-col justify-between bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="flex w-full">
+      <div className="border border-b-4 border-e-4 border-neutral-600 hover:shadow-xl duration-150 flex flex-col w-full justify-between bg-white shadow dark:bg-gray-800 dark:border-gray-700">
         <Link href={`/products/${product.name.split(" ").join("_")}`}>
-          <img
-            className="rounded-t-lg"
-            src={product.image}
-            alt={product.name}
-          />
+          <div className="w-full max-h-52 p-2">
+            <img
+              className="rounded-t-lg w-full max-h-52 border-2 border-neutral-200 shadow"
+              src={product.image}
+              alt={product.name}
+            />
+          </div>
         </Link>
         <div className="p-5 flex gap-5 flex-col">
           <Link href={`/products/${product.name.split(" ").join("_")}`}>
@@ -49,7 +51,7 @@ const MyProductCard = ({ product }: { product: ProductType }) => {
               {product.name}
             </h5>
           </Link>
-          <p className="mb-3 font-normal text-2xl text-gray-700 dark:text-gray-400">
+          <p className="mb-3 text-2xl font-mono font-bold text-yellow-600">
             Rp. {product.price}
           </p>
           <button

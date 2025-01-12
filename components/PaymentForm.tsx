@@ -2,7 +2,7 @@
 
 import { addOrder, getTransactionToken } from "@/utils/api";
 import { useCart } from "@/provider/context/CartContext";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 import { useMutation } from "@tanstack/react-query";
 import { Button, Label, TextInput } from "flowbite-react";
 import { FormEvent, useEffect, useState } from "react";
@@ -10,8 +10,7 @@ import { FormEvent, useEffect, useState } from "react";
 export default function PaymentForm() {
   const { cart, totalPrice, clearCart } = useCart();
   const { userId } = useAuth();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const { user } = useUser();
   const [phone, setPhone] = useState("");
   const [showSnapToggle, setShowSnapToggle] = useState(false);
 
@@ -38,54 +37,39 @@ export default function PaymentForm() {
   async function handleCheckout(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const customer_details = {
-      first_name: name,
-      email: email,
-      phone: phone,
-    };
-    await getTransactionToken({
-      gross_amount: totalPrice,
-      customer_details,
-      cart: cart.products,
-    }).then((res) => {
-      setShowSnapToggle(!showSnapToggle);
-      window.snap.pay(res.transactionToken, {
-        onSuccess: function () {
-          mutate({ userId });
-          clearCart();
-        },
+    if (
+      user !== undefined &&
+      user !== null &&
+      user.fullName &&
+      user.primaryEmailAddress &&
+      user.primaryEmailAddress.emailAddress
+    ) {
+      const customer_details = {
+        first_name: user.fullName,
+        email: user.primaryEmailAddress.emailAddress,
+        phone: phone,
+      };
+
+      await getTransactionToken({
+        gross_amount: totalPrice,
+        customer_details,
+        cart: cart.products,
+      }).then((res) => {
+        setShowSnapToggle(!showSnapToggle);
+        window.snap.pay(res.transactionToken, {
+          onSuccess: function () {
+            mutate({ userId });
+            clearCart();
+          },
+        });
       });
-    });
+    }
   }
 
   return (
     <form
       onSubmit={(e) => handleCheckout(e)}
       className="flex max-w-md flex-col gap-4 p-5">
-      <div>
-        <div className="mb-2 block">
-          <Label htmlFor="email" value="Your email" />
-        </div>
-        <TextInput
-          id="email"
-          type="email"
-          placeholder="name@mail.com"
-          required
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div>
-        <div className="mb-2 block">
-          <Label htmlFor="name" value="Your name" />
-        </div>
-        <TextInput
-          id="Name"
-          type="text"
-          placeholder="Your name"
-          required
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="phone_number" value="Your phone number" />
