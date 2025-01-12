@@ -10,6 +10,7 @@ import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ProductType } from "@/types/types";
 import { useRouter } from "next/navigation";
+import { ChevronLeftIcon } from "lucide-react";
 
 const Page = () => {
   const { userId } = useAuth();
@@ -72,7 +73,13 @@ const Page = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <section className="">
+    <section className="flex flex-col">
+      <button
+        className="w-max self-end border bg-neutral-50 shadow-md rounded-none flex gap-3 mb-7 items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
+        onClick={() => router.back()}>
+        <ChevronLeftIcon width={20} />
+        Back
+      </button>
       <form onSubmit={handleSubmit((data) => setFormData(data))}>
         <div className="mb-6">
           <label

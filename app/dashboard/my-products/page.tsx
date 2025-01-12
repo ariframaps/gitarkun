@@ -4,6 +4,7 @@ import MyProductCard from "@/components/MyProductCard";
 import { getMyProduct } from "@/utils/api";
 import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -21,7 +22,9 @@ const Page = () => {
       <div className="flex w-full items-center justify-between">
         <span className="font-semibold text-lg">Your Tabs</span>
         <button className=" flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 bg-yellow-400 border-b-4 border-e-4 border-black hover:bg-yellow-500 text-black">
-          <Link href={"/dashboard/my-products/add"}>+ Sell New Tab!</Link>
+          <Link href={"/dashboard/my-products/add"} className="flex gap-2 px-2">
+            <Plus size={20} /> Sell New Tab!
+          </Link>
         </button>
       </div>
       <ul className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-5">
