@@ -101,7 +101,7 @@ const Page = () => {
             <img className="w-full" src={product?.image} alt={product?.name} />
           </div>
 
-          <div className="mt-6 sm:mt-8 lg:mt-0 bg-slate-50 p-4 md:p-8 rounded-lg border">
+          <div className="mt-6 sm:mt-8 lg:mt-0 bg-neutral-50 p-4 md:p-8 rounded-lg border">
             <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
               {product?.name}
             </h1>
@@ -165,9 +165,9 @@ const Page = () => {
               )}
             </div>
 
-            <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
+            <hr className="my-6 md:my-8 border-gray-400 dark:border-gray-800" />
 
-            <p className="mb-6 text-gray-500 dark:text-gray-400">
+            <p className="mb-6 text-gray-700 dark:text-gray-400">
               {product?.description}
             </p>
           </div>
