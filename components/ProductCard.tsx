@@ -48,7 +48,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
           </p>
           <Link
             href={`/products/${productUrlPath}`}
-            className="mt-5 inline-flex items-center gap-3 px-3 py-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            className="mt-5 inline-flex items-center gap-3 px-3 py-2 text-sm font-medium text-center text-white bg-gray-700 rounded-none hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             See more
             <ArrowRight size={19} />
           </Link>

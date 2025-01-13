@@ -7,10 +7,10 @@ const ProductSoldCard = ({
   product: { product: ProductType; salesCount: number; revenue: number };
 }) => {
   return (
-    <li className="bg-neutral-100 border p-6 rounded flex flex-col md:flex-row gap-5 md:gap-10 justify-between justify-items-start md:items-center border-neutral-400">
-      <div className="md:block hidden ">
+    <li className="bg-neutral-100 border p-4 rounded flex flex-col md:flex-row gap-5 md:gap-10 justify-between md:items-center border-neutral-400">
+      <div className="md:block hidden border-2 shadow-md">
         <img
-          className="w-32 h-32 bg-cover"
+          className="w-36 h-24 bg-cover"
           src={product.product.image}
           alt={product.product.name}
         />

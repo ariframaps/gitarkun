@@ -48,7 +48,9 @@ const Page = () => {
 
       <section className="max-w-screen-xl py-8 mx-auto sm:px-10 px-3">
         <div className="flex w-full justify-between mb-5 sm:mb-10">
-          <span className="font-semibold text-xl">Featured</span>
+          <span className="font-semibold text-2xl pb-1 border-b-2 border-neutral-400">
+            Featured
+          </span>
           <button className=" flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 bg-yellow-400 border-b-4 border-e-4 border-black hover:bg-yellow-500 text-black">
             <Link href={"/products"}>View All</Link>
           </button>

@@ -37,7 +37,7 @@ const CartCard = ({ item }: { item: CartProductInfo }) => {
       <div className="hidden md:block rounded-md overflow-hidden shadow-md border-2 border-neutral-400">
         <img src={item.image || ""} width={100} height={100} />
       </div>
-      <div>
+      <div className="flex-1 ms-0 sm:ms-2">
         <Link href={`/products/${productUrlPath}`}>
           <h5
             onClick={() => setShowCart(false)}

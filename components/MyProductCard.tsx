@@ -3,13 +3,16 @@ import { ProductType } from "@/types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
+import { Button, Modal } from "flowbite-react";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 export type UpdateProductPayload = {
   productId: string;
 };
 
 const MyProductCard = ({ product }: { product: ProductType }) => {
+  const [openModal, setOpenModal] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -54,11 +57,43 @@ const MyProductCard = ({ product }: { product: ProductType }) => {
           <p className="mb-3 text-2xl font-mono font-bold text-yellow-600">
             Rp. {product.price}
           </p>
-          <button
-            onClick={handleDelete}
-            className="bg-red-900 hover:bg-red-700 text-white flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Delete
-          </button>
+          <>
+            <button
+              onClick={() => setOpenModal(true)}
+              className="w-max px-3 bg-red-900 hover:bg-red-700 text-white flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-none text-smpy-2 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              Delete
+            </button>
+
+            <Modal
+              show={openModal}
+              size="md"
+              onClose={() => setOpenModal(false)}
+              popup
+              className="h-screen flex items-center justify-center bg-black/65 transition-opacity">
+              <Modal.Header />
+              <Modal.Body>
+                <div className="text-center">
+                  <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                  <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                    Are you sure you want to delete this product?
+                  </h3>
+                  <div className="flex justify-center gap-4">
+                    <Button
+                      color="failure"
+                      onClick={() => {
+                        setOpenModal(false);
+                        handleDelete();
+                      }}>
+                      {"Yes, I'm sure"}
+                    </Button>
+                    <Button color="gray" onClick={() => setOpenModal(false)}>
+                      No, cancel
+                    </Button>
+                  </div>
+                </div>
+              </Modal.Body>
+            </Modal>
+          </>
         </div>
       </div>
     </div>

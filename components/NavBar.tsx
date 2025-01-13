@@ -54,7 +54,7 @@ const NavBar = () => {
           <Link
             href={"/dashboard/my-products"}
             type="button"
-            className="sm:bg-red-600 sm:border-b-4 sm:border-e-4 border-black hover:bg-white hover:text-black text-red-800 sm:text-white flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            className="border-s-2 sm:border-s-0 sm:bg-red-600 sm:border-b-4 sm:border-e-4 border-black hover:bg-white hover:text-black text-black sm:text-white flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Sell Yours!
           </Link>
           <SignedIn>

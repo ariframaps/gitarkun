@@ -4,6 +4,7 @@ import ProductSoldCard from "@/components/ProductSoldCard";
 import { fetchAnalytics } from "@/utils/api";
 import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
 import React from "react";
 
 const Analytics = () => {
@@ -14,7 +15,7 @@ const Analytics = () => {
   });
 
   return (
-    <div className="flex flex-col gap-10  max-w-screen-2xl">
+    <div className="flex flex-col gap-10 max-w-screen-lg">
       <div>
         <span className="font-semibold text-lg">Analytics</span>
         <div className="mt-5 p-5 border border-gray-400 rounded-sm text-lg bg-yellow-400 ">
@@ -28,9 +29,13 @@ const Analytics = () => {
           </p>
         </div>
       </div>
-      <ul className="flex flex-col gap-5">
+      <ul className="flex flex-col gap-3">
         {error && <p>something went wrong when fetching analytics</p>}
-        {isLoading && <p>Loading analytics...</p>}
+        {isLoading && (
+          <div className="col-span-4 w-full h-20 md:h-28 flex items-center justify-center">
+            <Loader2 className="animate-spin" />
+          </div>
+        )}
         {Array.isArray(data?.productStats) &&
           data.productStats.map((product) => (
             <ProductSoldCard product={product} key={product.product._id} />

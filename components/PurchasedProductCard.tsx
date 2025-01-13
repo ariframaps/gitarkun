@@ -22,13 +22,13 @@ const PurchasedProductCard = ({
             alt={product.name}
           />
         </div>
-        <h5 className="p-5 my-5 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+        <h5 className="p-5 mt-5 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
           {product.name}
         </h5>
       </div>
-      <div className="p-5 flex flex-col justify-between">
-        <button className="text-white bg-neutral-700 flex items-center hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          <a href={product.link} className="w-full">
+      <div className="px-3 flex flex-col justify-between">
+        <button className="text-white bg-neutral-700 flex items-center hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-none text-sm text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <a href={product.link} className="w-full px-2 py-2 md:py-2 ">
             Download Tab
           </a>
         </button>

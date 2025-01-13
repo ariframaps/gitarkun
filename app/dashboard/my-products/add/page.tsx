@@ -10,7 +10,7 @@ import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ProductType } from "@/types/types";
 import { useRouter } from "next/navigation";
-import { ChevronLeftIcon } from "lucide-react";
+import { ChevronLeftIcon, Loader2 } from "lucide-react";
 
 const Page = () => {
   const { userId } = useAuth();
@@ -18,6 +18,7 @@ const Page = () => {
   const imageRef = useRef<any>(null);
   const queryClient = useQueryClient();
   const router = useRouter();
+  const [disable, setDisable] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -42,6 +43,7 @@ const Page = () => {
   }, [formData]);
 
   async function handleAddProduct() {
+    setDisable(true);
     const newImageFormData = new FormData();
     newImageFormData.append("image", imageRef.current?.files[0]);
 
@@ -62,10 +64,14 @@ const Page = () => {
           };
 
           mutate({ product: newProduct });
-          router.push("/dashboard/my-products");
+          // router.push("/dashboard/my-products");
+          setTimeout(() => {
+            window.location.replace("/dashboard/my-products");
+          }, 100);
         }
       })
       .catch(() => {
+        setDisable(false);
         return;
       });
   }
@@ -289,8 +295,9 @@ const Page = () => {
         </div>
         <button
           type="submit"
-          disabled={isLoading}
-          className=" mt-7 text-white bg-blue-700 flex items-center hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-4 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          disabled={isLoading || disable}
+          className="disabled:bg-neutral-400 mt-7 text-white bg-blue-700 flex items-center gap-3 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-4 md:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          {disable && <Loader2 className="animate-spin" />}
           Submit
         </button>
       </form>
