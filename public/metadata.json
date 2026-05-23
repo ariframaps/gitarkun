@@ -1,0 +1,59 @@
+{
+  "title": "Guitar Tablature Marketplace",
+  "category": "personal",
+  "description": "A niche e-commerce platform built for guitarists and music arrangers to buy and sell guitar tablature and arrangements in PDF format. The platform focuses on fingerstyle and classical guitar communities by providing product discovery, seller dashboards, protected downloads, analytics, authentication, and digital product management workflows.",
+  "shortDesc": "E-commerce platform for buying and selling guitar tablature PDFs.",
+  "tags": [
+    "next.js",
+    "typescript",
+    "node.js",
+    "express",
+    "mongodb",
+    "mongoose",
+    "clerk",
+    "react-query",
+    "zod",
+    "tailwindcss",
+    "nodemailer",
+    "midtrans"
+  ],
+  "role": "Fullstack Developer",
+  "year": "2024",
+  "confidentialNote": null,
+  "details": {
+    "overview": "This project was inspired by my interest in fingerstyle guitar and the lack of dedicated platforms for selling and purchasing guitar tablature and arrangements. The platform allows musicians to upload, manage, sell, and purchase digital tablature products in PDF format with role-based access for buyers and sellers.",
+    "problem": "Most musicians selling guitar tabs rely on scattered platforms such as Google Drive links, social media, or generic marketplaces that are not designed for digital music products. I wanted to build a centralized platform specifically tailored for guitar arrangers and players with better product discovery and seller workflows.",
+    "solution": "I developed a fullstack e-commerce platform using Next.js, TypeScript, Node.js, Express, and MongoDB. The platform includes product browsing, filtering by difficulty level, shopping cart functionality, role-based seller dashboards, protected PDF downloads, analytics dashboards, authentication with Clerk, and email workflows using Nodemailer. Midtrans payment gateway integration was also planned to support secure digital transactions.",
+    "timeline": [
+      {
+        "date": "Dec 2024",
+        "label": "Project planning & database design"
+      },
+      {
+        "date": "Dec 2025",
+        "label": "Marketplace & product management implementation"
+      },
+      {
+        "date": "Dec 2025",
+        "label": "Authentication, dashboards & protected downloads"
+      },
+      {
+        "date": "Jan 2026",
+        "label": "Checkout workflow & feature polishing"
+      }
+    ],
+    "highlights": [
+      "Digital marketplace for guitar tablature PDFs",
+      "Role-based authentication using Clerk",
+      "Seller dashboard with analytics and product management",
+      "Advanced product filtering and sorting",
+      "Protected download links for purchased products",
+      "Shopping cart and checkout workflow",
+      "Difficulty-level categorization for guitar arrangements",
+      "Product recommendations based on categories",
+      "Email confirmation and digital delivery flow",
+      "Built with Next.js, Express.js, and MongoDB"
+    ],
+    "outcome": "The project became one of my most ambitious personal builds and helped strengthen my understanding of fullstack application architecture, digital product workflows, authentication systems, and marketplace-style user experiences while combining my passion for music and software development."
+  }
+}
